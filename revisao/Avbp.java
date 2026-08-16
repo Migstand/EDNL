@@ -31,6 +31,30 @@ public class Avbp{
         return leftchild(no) == null and rightchild(no) == null;
     }
 
+    public int depth(No no){
+        int h = 0;
+
+        No copy = no;
+        
+        return sumroot(h, copy);
+
+    }
+
+    private int sumroot(int h, No copy){
+        if (isRoot(copy)){
+            return h;
+        } else{
+            copy = copy.getfather();
+            h += 1;
+            return sumroot(h, copy);
+        }
+    }
+
+    public int height(){
+        
+    }
+
+
     public Object find(No no){
         No compar = this.raiz;
 
@@ -50,4 +74,22 @@ public class Avbp{
 
         return "Não encontrado";
     }
+
+    // public void mostrar(){
+        
+    //     Object matriz[][] = new Object[height(root())+1][size()];
+    //     visuals(matriz, root());
+    //     this.num = 0;
+
+    //     for (int i = 0; i < height(root())+1; i++){
+    //         for (int j = 0; j < size(); j++){
+    //             if (matriz[i][j] == null){
+    //                 System.out.print("    ");
+    //             } else {
+    //                 System.out.print(matriz[i][j] + "    ");
+    //             }
+    //         }
+    //         System.out.println("");
+    //     }
+    // }    
 }
