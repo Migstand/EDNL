@@ -1,3 +1,6 @@
+import java.util.Arraylist;
+import java.util.Iterator;
+
 public class Avbp{
     private No raiz;
     private int size;
@@ -13,6 +16,14 @@ public class Avbp{
 
     public No rightchild(No no){
         return no.getright();
+    }
+
+    public boolean hasleft(No no){
+        return leftchild(no) != null;
+    }
+
+    public boolean hasright(No no){
+        return rightchild(no) != null;
     }
 
     public int size(){
@@ -31,49 +42,102 @@ public class Avbp{
         return leftchild(no) == null and rightchild(no) == null;
     }
 
+    private Arraylist<No> children(No no){
+        Arraylist<No> childs = new Arraylist<>;
+        if (hasleft(no)){
+            childs.add(leftchild(no));
+        }
+        if (hasright(no)){
+            childs.add(rightchild(no));
+        }
+        return childs;
+    }
+
     public int depth(No no){
+        if (isRoot(no)){
+            return 0;
+        }
+        return 1 + depth(no.getfather());
+
+    }
+
+    public int height(No no){
+        if (isExternal(no)){
+            return 0;
+        }
         int h = 0;
 
-        No copy = no;
-        
-        return sumroot(h, copy);
-
+        Iterator <No> childs = (children(no)).iterator();
+        while (childs.hasNext()){
+            No next_no = childs.next();
+            h = Math.max(h, height(next_no));
+        }
+        return 1 + h;
     }
 
-    private int sumroot(int h, No copy){
-        if (isRoot(copy)){
-            return h;
+
+    public No find(No no, int k){
+        if (isExternal(no)){
+            return no;
+        }
+        if (k < no.getkey()){
+            return find(leftchild(no), k);
+        }
+        if (k == no.getkey()){
+            return no;
+        }else{
+            return find(rightchild(no), k);
+        }
+
+        // * WHILE VERSION * \\
+        // No compar = this.raiz;
+        // while (compar != null){
+        //     if (no.getkey() > compar.getkey()){
+        //         compar = compar.rightchild();
+        //     }
+
+        //     if (no.getkey() < compar.getkey()){
+        //         compar = compar.leftchild();
+        //     }
+
+        //     if (compar.getkey() == no.getkey()){
+        //         return no.getelement();
+        //     }
+        // }
+
+        // return "Não encontrado";
+    }
+
+    public void insert(int key, Object ele){
+        No no = find(key);
+        No new_no;
+        if (key > no.getkey()){
+            new_no = new No(key, ele, no);
+            no.setright(new_no);
         } else{
-            copy = copy.getfather();
-            h += 1;
-            return sumroot(h, copy);
+            new_no = new No(key, ele, no);
+            no.setleft(new_no);
         }
     }
 
-    public int height(){
-        
-    }
+    public Object remove(No no){
+        Object removed;
+        if (isExternal(no)){
+            no = null;
+        } else{
+            Arraylist <No> quant = children(no);
+            int si = quant.size();
+            if (si == 1){
+                if ((no.getfather()).getkey() < no.getkey()){
+                    (no.getfather()).setright(quant.get(0));
+                    // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).Object)
+                } else{
 
-
-    public Object find(No no){
-        No compar = this.raiz;
-
-        while (compar != null){
-            if (no.getkey() > compar.getkey()){
-                compar = compar.rightchild();
-            }
-
-            if (no.getkey() < compar.getkey()){
-                compar = compar.leftchild();
-            }
-
-            if (compar.getkey() == no.getkey()){
-                return no.getelement();
+                }
             }
         }
-
-        return "Não encontrado";
     }
+
 
     // public void mostrar(){
         
