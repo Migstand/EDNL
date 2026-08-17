@@ -121,7 +121,11 @@ public class Avbp{
     }
 
     public Object remove(No no){
-        Object removed;
+        // Object removed = find(no);
+        // if (no == null){
+        //     return "Não existe o objeto";
+        // }
+        Object removed = no.getelement();
         if (isExternal(no)){
             no = null;
         } else{
@@ -130,12 +134,32 @@ public class Avbp{
             if (si == 1){
                 if ((no.getfather()).getkey() < no.getkey()){
                     (no.getfather()).setright(quant.get(0));
-                    // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).Object)
+                    No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), (quant.get(0)).getfather());
+                    new_no.setleft(leftchild(quant.get(0)));
+                    new_no.setright(rightchild(quant.get(0)));
                 } else{
-
+                    (no.getfather()).setleft(quant.get(0));
+                    No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), (quant.get(0)).getfather());
+                    new_no.setleft(leftchild(quant.get(0)));
+                    new_no.setright(rightchild(quant.get(0)));
                 }
+            } else{
+                // A brincadeira começa aqui >:/
+                No copy = no.getright();
+                while(hasleft(copy)){
+                    copy = leftchild(copy);
+                }
+                No new_no = new No(copy.getkey(), copy.getelement(), copy.getfather());
+                (copy.getfather()).setleft(copy);
+                new_no = new No(no.getkey(), no.getelement(), no.getfather())
+                (no.getfather()).setleft(no);
+                no = null;
             }
         }
+
+        no = null;
+
+        return removed;
     }
 
 
