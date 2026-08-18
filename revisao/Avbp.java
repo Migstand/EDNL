@@ -1,4 +1,4 @@
-import java.util.Arraylist;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Avbp{
@@ -9,13 +9,16 @@ public class Avbp{
         this.raiz = new No(key, element, null);
         this.size = 1;
     }
+    public No root(){
+        return this.raiz;
+    }
 
     public No leftchild(No no){
-        return no.getleft();
+        return no.leftchild();
     }
 
     public No rightchild(No no){
-        return no.getright();
+        return no.rightchild();
     }
 
     public boolean hasleft(No no){
@@ -35,15 +38,15 @@ public class Avbp{
     }
 
     public boolean isInternal(No no){
-        return leftchild(no) != null or rightchild(no) != null;
+        return (leftchild(no) != null) || (rightchild(no) != null);
     }
 
     public boolean isExternal(No no){
-        return leftchild(no) == null and rightchild(no) == null;
+        return (leftchild(no) == null) && (rightchild(no)) == null;
     }
 
-    private Arraylist<No> children(No no){
-        Arraylist<No> childs = new Arraylist<>;
+    private ArrayList<No> children(No no){
+        ArrayList<No> childs = new ArrayList<>();
         if (hasleft(no)){
             childs.add(leftchild(no));
         }
@@ -75,18 +78,23 @@ public class Avbp{
         return 1 + h;
     }
 
+    public void replace(No subs, No subed){
+        subs.setkey(subed.getkey());
+        subs.setelement(subed.getelement());
+    }
 
-    public No find(No no, int k){
+
+    public No find(int k, No no){
         if (isExternal(no)){
             return no;
         }
         if (k < no.getkey()){
-            return find(leftchild(no), k);
+            return find(k, leftchild(no));
         }
         if (k == no.getkey()){
             return no;
         }else{
-            return find(rightchild(no), k);
+            return find(k, rightchild(no));
         }
 
         // * WHILE VERSION * \\
@@ -109,7 +117,10 @@ public class Avbp{
     }
 
     public void insert(int key, Object ele){
-        No no = find(key);
+        No no = find(key, this.raiz);
+        if(no.getkey()==key){
+            System.out.println("Elemento já inserido");
+        }
         No new_no;
         if (key > no.getkey()){
             new_no = new No(key, ele, no);
@@ -121,15 +132,14 @@ public class Avbp{
     }
 
     public Object remove(No no){
-        // Object removed = find(no);
-        // if (no == null){
-        //     return "Não existe o objeto";
-        // }
-        Object removed = no.getelement();
+        No removed = find(no.getkey(), this.raiz);
+        if(no.getkey()!=removed.getkey()){
+            return "Elemento já inserido";
+        }
         if (isExternal(no)){
             no = null;
         } else{
-            Arraylist <No> quant = children(no);
+            ArrayList <No> quant = children(no);
             int si = quant.size();
             if (si == 1){
                 if ((no.getfather()).getkey() < no.getkey()){
@@ -145,15 +155,18 @@ public class Avbp{
                 }
             } else{
                 // A brincadeira começa aqui >:/
-                No copy = no.getright();
+                No copy = rightchild(no);
+
                 while(hasleft(copy)){
                     copy = leftchild(copy);
                 }
+
                 No new_no = new No(copy.getkey(), copy.getelement(), copy.getfather());
-                (copy.getfather()).setleft(copy);
-                new_no = new No(no.getkey(), no.getelement(), no.getfather())
-                (no.getfather()).setleft(no);
-                no = null;
+                (copy.getfather()).setleft(new_no);
+                new_no.setright(rightchild(copy));
+                replace(no, copy);
+                copy = null;
+            
             }
         }
 

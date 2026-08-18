@@ -31,6 +31,14 @@ public class No{
         return this.right;
     }
 
+    public void setkey(int key){
+        this.key = key;
+    }
+
+    public void setelement(Object o){
+        this.element = o;
+    }
+
     public void setright(No right){
         this.right = right;
     }
