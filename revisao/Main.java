@@ -15,7 +15,17 @@ public class Main{
         Avbp pesca = new Avbp(ini, ini_ele);
 
         System.out.println("O início da Árvore tem chave "+ (pesca.root()).getkey()+" que guarda o elemento " + (pesca.root()).getelement());
-
+        
+        int a = (pesca.root()).getkey();
+        for (int i = 0; i < a; i++){
+            System.out.println(i);
+            if (i < a/2){
+                pesca.insert(a/2 * (i+1), "Ola" + i);
+            } else {
+                pesca.insert(a - i*2, "Ola" + i);
+            }
+            pesca.insert(i+1, "Ola" + i);
+        }
     }
 
 }

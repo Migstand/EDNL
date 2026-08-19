@@ -121,12 +121,10 @@ public class Avbp{
         if(no.getkey()==key){
             System.out.println("Elemento já inserido");
         }
-        No new_no;
+        No new_no = new No(key, ele, no);
         if (key > no.getkey()){
-            new_no = new No(key, ele, no);
             no.setright(new_no);
         } else{
-            new_no = new No(key, ele, no);
             no.setleft(new_no);
         }
     }
