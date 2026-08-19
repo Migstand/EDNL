@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Avbp{
+    private int num = 0;
     private No raiz;
     private int size;
 
@@ -9,6 +10,11 @@ public class Avbp{
         this.raiz = new No(key, element, null);
         this.size = 1;
     }
+
+    public int size(){
+        return this.size;
+    }
+
     public No root(){
         return this.raiz;
     }
@@ -29,10 +35,6 @@ public class Avbp{
         return rightchild(no) != null;
     }
 
-    public int size(){
-        return this.size;
-    }
-
     public boolean isRoot(No no){
         return no == this.raiz;
     }
@@ -45,7 +47,22 @@ public class Avbp{
         return (leftchild(no) == null) && (rightchild(no)) == null;
     }
 
-    private ArrayList<No> children(No no){
+    public ArrayList<Object> elements(){
+        ArrayList<Object> elementos = new ArrayList<Object>();
+        pre_order(this.raiz,elementos);
+        
+        return elementos;
+    }
+
+    public ArrayList<No> nos(){
+        ArrayList<No> elementos = new ArrayList<No>();
+        pre_orderNo(this.raiz, elementos);
+
+        //Iterator<No> ite = elementos.iterator();
+        return elementos;
+    }
+
+    public ArrayList<No> children(No no){
         ArrayList<No> childs = new ArrayList<>();
         if (hasleft(no)){
             childs.add(leftchild(no));
@@ -85,6 +102,9 @@ public class Avbp{
 
 
     public No find(int k, No no){
+        if (no == null){
+            return no;
+        }
         if (isExternal(no)){
             return no;
         }
@@ -118,15 +138,18 @@ public class Avbp{
 
     public void insert(int key, Object ele){
         No no = find(key, this.raiz);
-        if(no.getkey()==key){
+        if(no.getkey() != key){
+            No new_no = new No(key, ele, no);
+            if (key > no.getkey()){
+                no.setright(new_no);
+            } else{
+                no.setleft(new_no);
+            }
+            this.size++;
+        } else{
             System.out.println("Elemento já inserido");
         }
-        No new_no = new No(key, ele, no);
-        if (key > no.getkey()){
-            no.setright(new_no);
-        } else{
-            no.setleft(new_no);
-        }
+        
     }
 
     public Object remove(No no){
@@ -176,11 +199,11 @@ public class Avbp{
 
     // public void mostrar(){
         
-    //     Object matriz[][] = new Object[height(root())+1][size()];
+    //     Object matriz[][] = new Object[height(root()) + 1][size()];
     //     visuals(matriz, root());
     //     this.num = 0;
 
-    //     for (int i = 0; i < height(root())+1; i++){
+    //     for (int i = 0; i < height(root()) + 1; i++){
     //         for (int j = 0; j < size(); j++){
     //             if (matriz[i][j] == null){
     //                 System.out.print("    ");
@@ -190,5 +213,76 @@ public class Avbp{
     //         }
     //         System.out.println("");
     //     }
-    // }    
+    // }
+
+    // private void visuals(Object[][] ob, No no){
+    //     if (hasleft(no)){
+    //         visuals(ob, leftchild(no));
+    //     }
+    //     // System.out.println(this.num);
+    //     ob[depth(no)][this.num] = no.getelement();
+    //     ++this.num;
+    //     if (hasright(no)){
+    //         visuals(ob, rightchild(no));
+    //     }
+    // }
+
+    // public void mostrar() {
+    //     mostrarRecursivo(root(), 0);
+    // }
+
+    // private void mostrarRecursivo(No no, int nivel) {
+    //     if (no == null) return;
+
+    //     // 1. Visita o lado direito primeiro (para o topo da árvore ficar na esquerda da tela)
+    //     if (hasright(no)) {
+    //         mostrarRecursivo(rightchild(no), nivel + 1);
+    //     }
+
+    //     // 2. Imprime o nó atual com recuo baseado no nível (profundidade)
+    //     for (int i = 0; i < nivel; i++) {
+    //         System.out.print("    "); // 4 espaços por nível de profundidade
+    //     }
+    //     if (no == root()){
+    //         System.out.println(no.getelement() + " (Chave: " + no.getkey() + ")");
+    //     } else{
+    //         System.out.println(no.getelement() + " (Chave: " + no.getkey() + ")" + " (Chave: " + (no.getfather()).getkey() + ")");
+    //     }
+        
+
+    //     // 3. Visita o lado esquerdo
+    //     if (hasleft(no)) {
+    //         mostrarRecursivo(leftchild(no), nivel + 1);
+    //     }
+    // }
+
+    private void pre_order(No v, ArrayList<Object> lista){
+        if (v == null){
+            return;
+        }
+
+        lista.add(v.getelement());
+
+        Iterator<No> meus_fi = children(v).iterator();
+
+        while (meus_fi.hasNext()){
+            No prox = meus_fi.next();
+            pre_order(prox, lista);
+        }
+    }
+
+    private void pre_orderNo(No v, ArrayList<No> lista){
+        if (v == null){
+            return;
+        }
+
+        lista.add(v);
+
+        Iterator<No> meus_fi = children(v).iterator();
+
+        while (meus_fi.hasNext()){
+            No prox = meus_fi.next();
+            pre_orderNo(prox, lista);
+        }
+    }
 }

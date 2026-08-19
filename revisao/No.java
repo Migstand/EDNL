@@ -9,6 +9,7 @@ public class No{
         this.father = father;
         this.element = element;
         this.key = key;
+        
     }
 
     public int getkey(){
