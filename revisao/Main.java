@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Main{
     public static void main(String[] args){
@@ -9,6 +10,7 @@ public class Main{
 
         Scanner sc = new Scanner(System.in);
         Scanner so = new Scanner(System.in);
+        Random ran = new Random();
 
         int ini = sc.nextInt();
 
@@ -19,19 +21,25 @@ public class Main{
         System.out.println("O início da Árvore tem chave "+ (pesca.root()).getkey()+" que guarda o elemento " + (pesca.root()).getelement());
         
         int a = (pesca.root()).getkey();
+        int valor;
         for (int i = 0; i < a; i++){
-            if (i < a/2){
-                System.out.println((i + 1)*2 + " Ola" + i);
-                pesca.insert((i + 1)*2, "Ola" + i); 
-            } else {
-                System.out.println((a + i)/2 + " Ola" + i);
-                pesca.insert((a + i) /2, "Ola" + i); //(a + i) /2
-            }
+            System.out.println(i);
+            // ini = sc.nextInt();
+            // ini_ele = so.nextLine();
+            valor = ran.nextInt(a*2);
+            pesca.insert(valor, valor);
+            // if (i < a/2){
+            //     //System.out.println(a/2 + (i + 1) + " Ola" + i);
+            //     pesca.insert(a/2 + (i + 1), "Ola" + i); 
+            // } else {
+            //     //System.out.println((a/2 * i) - i + " Ola" + i);
+            //     pesca.insert((a/2 * i) - i, "Ola" + i); //(a + i) /2
+            // }
             //pesca.insert(i+1, "Ola" + i);
         }
         System.out.println(pesca.height(pesca.root()) + " Altura");
 
-        //pesca.mostrar();
+        pesca.mostrar();
 
         System.out.println("---------------------------------------");
         System.out.println(" ");

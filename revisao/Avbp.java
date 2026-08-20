@@ -153,7 +153,7 @@ public class Avbp{
             }
             this.size++;
         } else{
-            System.out.println("Elemento já inserido");
+            System.out.println("O Elemento " + no.getelement() + " de chave " + no.getkey() + " já inserido");
         }
         
     }
@@ -203,35 +203,35 @@ public class Avbp{
     }
 
 
-    // public void mostrar(){
+    public void mostrar(){
         
-    //     Object matriz[][] = new Object[height(root()) + 1][size()];
-    //     visuals(matriz, root());
-    //     this.num = 0;
+        Object matriz[][] = new Object[height(root()) + 1][size()];
+        visuals(matriz, root());
+        this.num = 0;
 
-    //     for (int i = 0; i < height(root()) + 1; i++){
-    //         for (int j = 0; j < size(); j++){
-    //             if (matriz[i][j] == null){
-    //                 System.out.print("    ");
-    //             } else {
-    //                 System.out.print(matriz[i][j] + "    ");
-    //             }
-    //         }
-    //         System.out.println("");
-    //     }
-    // }
+        for (int i = 0; i < height(root()) + 1; i++){
+            for (int j = 0; j < size(); j++){
+                if (matriz[i][j] == null){
+                    System.out.print("    ");
+                } else {
+                    System.out.print(matriz[i][j] + "    ");
+                }
+            }
+            System.out.println("");
+        }
+    }
 
-    // private void visuals(Object[][] ob, No no){
-    //     if (hasleft(no)){
-    //         visuals(ob, leftchild(no));
-    //     }
-    //     // System.out.println(this.num);
-    //     ob[depth(no)][this.num] = no.getelement();
-    //     ++this.num;
-    //     if (hasright(no)){
-    //         visuals(ob, rightchild(no));
-    //     }
-    // }
+    private void visuals(Object[][] ob, No no){
+        if (hasleft(no)){
+            visuals(ob, leftchild(no));
+        }
+        // System.out.println(this.num);
+        ob[depth(no)][this.num] = no.getelement();
+        ++this.num;
+        if (hasright(no)){
+            visuals(ob, rightchild(no));
+        }
+    }
 
     // public void mostrar() {
     //     mostrarRecursivo(root(), 0);
