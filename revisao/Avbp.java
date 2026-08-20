@@ -158,48 +158,60 @@ public class Avbp{
         
     }
 
-    public Object remove(No no){
-        No removed = find(no.getkey(), this.raiz);
-        if(no.getkey()!=removed.getkey()){
-            return "Elemento já inserido";
-        }
-        if (isExternal(no)){
-            no = null;
+    public void remove(int key){
+        No removed = find(key, this.raiz);
+        if(key!=removed.getkey()){
+            System.out.println("Elemento não encontrado");
         } else{
-            ArrayList <No> quant = children(no);
-            int si = quant.size();
-            if (si == 1){
-                if ((no.getfather()).getkey() < no.getkey()){
-                    (no.getfather()).setright(quant.get(0));
-                    No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), (quant.get(0)).getfather());
-                    new_no.setleft(leftchild(quant.get(0)));
-                    new_no.setright(rightchild(quant.get(0)));
-                } else{
-                    (no.getfather()).setleft(quant.get(0));
-                    No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), (quant.get(0)).getfather());
-                    new_no.setleft(leftchild(quant.get(0)));
-                    new_no.setright(rightchild(quant.get(0)));
-                }
-            } else{
-                // A brincadeira começa aqui >:/
-                No copy = rightchild(no);
+            if (isExternal(no)){
 
-                while(hasleft(copy)){
-                    copy = leftchild(copy);
+                if ((removed.getfather()).getkey() < key){
+                    (removed.getfather()).setleft(null);
+                }else{
+                    (removed.getfather()).setright(null);
                 }
-
-                No new_no = new No(copy.getkey(), copy.getelement(), copy.getfather());
-                (copy.getfather()).setleft(new_no);
-                new_no.setright(rightchild(copy));
-                replace(no, copy);
-                copy = null;
+                System.out.println("O Elemento " + removed.getelement() + " foi removido!");
+                removed = null;
             
+            } else{
+                ArrayList <No> quant = children(removed);
+                int si = quant.size();
+                if (si == 1){
+                    if ((removed.getfather()).getkey() < key){
+                        (removed.getfather()).setright(quant.get(0));
+                        No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
+                        new_no.setleft(leftchild(quant.get(0)));
+                        new_no.setright(rightchild(quant.get(0)));
+                    } else{
+                        (removed.getfather()).setleft(quant.get(0));
+                        No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
+                        new_no.setleft(leftchild(quant.get(0)));
+                        new_no.setright(rightchild(quant.get(0)));
+                    }
+                } else{
+                    // A brincadeira começa aqui >:/
+                    No copy = rightchild(removed);
+                    No verif = copy;
+                    while(hasleft(copy)){
+                        copy = leftchild(copy);
+                    }
+
+                    replace(removed, copy);
+                    if (verif != copy){
+                        (copy.getfather()).setleft(rightchild(copy));
+                    } else{
+                        (copy.getfather()).setright(null);
+                    }
+                    copy = null;
+                
+                }
+                System.out.println("O Elemento " + removed.getelement() + " foi removido!");
             }
+
+            removed = null;
+
         }
-
-        no = null;
-
-        return removed;
+        
     }
 
 
