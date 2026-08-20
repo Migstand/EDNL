@@ -179,14 +179,14 @@ public class Avbp{
                 if (si == 1){
                     if ((removed.getfather()).getkey() < key){
                         (removed.getfather()).setright(quant.get(0));
-                        No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
-                        new_no.setleft(leftchild(quant.get(0)));
-                        new_no.setright(rightchild(quant.get(0)));
+                        // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
+                        // new_no.setleft(leftchild(quant.get(0)));
+                        // new_no.setright(rightchild(quant.get(0)));
                     } else{
                         (removed.getfather()).setleft(quant.get(0));
-                        No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
-                        new_no.setleft(leftchild(quant.get(0)));
-                        new_no.setright(rightchild(quant.get(0)));
+                        // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
+                        // new_no.setleft(leftchild(quant.get(0)));
+                        // new_no.setright(rightchild(quant.get(0)));
                     }
                 } else{
                     // A brincadeira começa aqui >:/
