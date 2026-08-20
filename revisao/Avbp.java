@@ -109,11 +109,17 @@ public class Avbp{
             return no;
         }
         if (k < no.getkey()){
+            if (leftchild(no) == null) {
+                return no; // o pai onde será inserido
+            }
             return find(k, leftchild(no));
         }
         if (k == no.getkey()){
             return no;
         }else{
+            if (rightchild(no) == null) {
+                return no; // o pai onde será inserido
+            }
             return find(k, rightchild(no));
         }
 
