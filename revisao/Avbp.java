@@ -160,30 +160,34 @@ public class Avbp{
 
     public void remove(int key){
         No removed = find(key, this.raiz);
+        Object ele = removed.getelement();
         if(key!=removed.getkey()){
             System.out.println("Elemento não encontrado");
         } else{
-            if (isExternal(no)){
+            if (isExternal(removed)){
 
                 if ((removed.getfather()).getkey() < key){
                     (removed.getfather()).setleft(null);
                 }else{
                     (removed.getfather()).setright(null);
                 }
-                System.out.println("O Elemento " + removed.getelement() + " foi removido!");
+                System.out.println("O Elemento " + ele + " foi removido!");
                 removed = null;
             
             } else{
                 ArrayList <No> quant = children(removed);
                 int si = quant.size();
                 if (si == 1){
+                    // Implementar catch para o caso 
                     if ((removed.getfather()).getkey() < key){
                         (removed.getfather()).setright(quant.get(0));
+                        (quant.get(0)).setfather(removed.getfather());
                         // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
                         // new_no.setleft(leftchild(quant.get(0)));
                         // new_no.setright(rightchild(quant.get(0)));
                     } else{
                         (removed.getfather()).setleft(quant.get(0));
+                        (quant.get(0)).setfather(removed.getfather());
                         // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
                         // new_no.setleft(leftchild(quant.get(0)));
                         // new_no.setright(rightchild(quant.get(0)));
@@ -205,11 +209,11 @@ public class Avbp{
                     copy = null;
                 
                 }
-                System.out.println("O Elemento " + removed.getelement() + " foi removido!");
+                System.out.println("O Elemento " + ele + " foi removido!");
             }
 
             removed = null;
-
+            this.size--;
         }
         
     }

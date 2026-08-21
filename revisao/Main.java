@@ -41,7 +41,16 @@ public class Main{
 
         pesca.mostrar();
 
-        for 
+        System.out.println("---------------------------------------");
+        System.out.println(" ");
+
+        int s = pesca.size();
+        for (int i = 0; i < s; i++){
+            pesca.mostrar();
+            System.out.println("---------------------------------------");
+            System.out.println(" ");
+            pesca.remove((pesca.root().getkey()));
+        }
 
         System.out.println("---------------------------------------");
         System.out.println(" ");

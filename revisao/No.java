@@ -47,4 +47,8 @@ public class No{
     public void setleft(No left){
         this.left = left;
     }
+
+    public void setfather(No father){
+        this.father = father;
+    }
 }
