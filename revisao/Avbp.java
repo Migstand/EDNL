@@ -179,19 +179,25 @@ public class Avbp{
                 int si = quant.size();
                 if (si == 1){
                     // Implementar catch para o caso 
-                    if ((removed.getfather()).getkey() < key){
-                        (removed.getfather()).setright(quant.get(0));
-                        (quant.get(0)).setfather(removed.getfather());
-                        // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
-                        // new_no.setleft(leftchild(quant.get(0)));
-                        // new_no.setright(rightchild(quant.get(0)));
-                    } else{
-                        (removed.getfather()).setleft(quant.get(0));
-                        (quant.get(0)).setfather(removed.getfather());
-                        // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
-                        // new_no.setleft(leftchild(quant.get(0)));
-                        // new_no.setright(rightchild(quant.get(0)));
+                    if (isRoot(removed)){
+                        this.raiz = quant.get(0);
+                    } //
+                    else{
+                        if ((removed.getfather()).getkey() < key){
+                            (removed.getfather()).setright(quant.get(0));
+                            (quant.get(0)).setfather(removed.getfather());
+                            // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
+                            // new_no.setleft(leftchild(quant.get(0)));
+                            // new_no.setright(rightchild(quant.get(0)));
+                        } else{
+                            (removed.getfather()).setleft(quant.get(0));
+                            (quant.get(0)).setfather(removed.getfather());
+                            // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
+                            // new_no.setleft(leftchild(quant.get(0)));
+                            // new_no.setright(rightchild(quant.get(0)));
+                        }
                     }
+                    
                 } else{
                     // A brincadeira começa aqui >:/
                     No copy = rightchild(removed);
