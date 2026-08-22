@@ -106,17 +106,21 @@ public class Avbp{
             return no;
         }
         if (isExternal(no)){
+            //System.out.println(no.getkey() + " A chave Find Ext");
             return no;
         }
         if (k < no.getkey()){
+            //System.out.println(no.getkey() + " A chave Find Left");
             if (leftchild(no) == null) {
                 return no; // o pai onde será inserido
             }
             return find(k, leftchild(no));
         }
         if (k == no.getkey()){
+            //System.out.println(no.getkey() + " A chave Find Ig");
             return no;
         }else{
+            //System.out.println(no.getkey() + " A chave Find Right");
             if (rightchild(no) == null) {
                 return no; // o pai onde será inserido
             }
@@ -144,6 +148,7 @@ public class Avbp{
 
     public void insert(int key, Object ele){
         No no = find(key, this.raiz);
+        //System.out.println(no.getkey() + " A chave check " + key);
         if(no.getkey() != key){
             No new_no = new No(key, ele, no);
             if (key > no.getkey()){
@@ -152,8 +157,9 @@ public class Avbp{
                 no.setleft(new_no);
             }
             this.size++;
+            //System.out.println("O Elemento " + new_no.getelement() + " de chave " + new_no.getkey() + " foi inserido");
         } else{
-            System.out.println("O Elemento " + no.getelement() + " de chave " + no.getkey() + " já inserido");
+            //System.out.println("O Elemento " + no.getelement() + " de chave " + no.getkey() + " já inserido");
         }
         
     }
@@ -165,21 +171,26 @@ public class Avbp{
             System.out.println("Elemento não encontrado");
         } else{
             if (isExternal(removed)){
-
-                if ((removed.getfather()).getkey() < key){
-                    (removed.getfather()).setleft(null);
-                }else{
-                    (removed.getfather()).setright(null);
+                if (isRoot(removed)){
+                    this.raiz = null;
+                } else{
+                    if ((removed.getfather()).getkey() < key){
+                        (removed.getfather()).setleft(null);
+                    }else{
+                        (removed.getfather()).setright(null);
+                    }
                 }
-                System.out.println("O Elemento " + ele + " foi removido!");
-                removed = null;
+                //removed.setfather(null);
+                removed.setfather(null);
             
             } else{
                 ArrayList <No> quant = children(removed);
                 int si = quant.size();
+                //System.out.println(quant.size() + " Tamanho do nó " + removed.getkey());
                 if (si == 1){
                     // Implementar catch para o caso 
                     if (isRoot(removed)){
+                        quant.get(0).setfather(null);
                         this.raiz = quant.get(0);
                     } //
                     else{
@@ -210,12 +221,17 @@ public class Avbp{
                     if (verif != copy){
                         (copy.getfather()).setleft(rightchild(copy));
                     } else{
-                        (copy.getfather()).setright(null);
+                        (copy.getfather()).setright(rightchild(copy));
                     }
+
+                    if (rightchild(copy) != null){
+                        rightchild(copy).setfather(copy.getfather());
+                    }
+            
                     copy = null;
                 
                 }
-                System.out.println("O Elemento " + ele + " foi removido!");
+                //System.out.println("O Elemento " + ele + " foi removido!");
             }
 
             removed = null;
@@ -227,20 +243,25 @@ public class Avbp{
 
     public void mostrar(){
         
-        Object matriz[][] = new Object[height(root()) + 1][size()];
-        visuals(matriz, root());
-        this.num = 0;
+        if (size() == 0){
+            System.out.println("Não tem nada para ver");
+        } else {
+            Object matriz[][] = new Object[height(root())+1][size() + 1];
+            visuals(matriz, root());
+            this.num = 0;
 
-        for (int i = 0; i < height(root()) + 1; i++){
-            for (int j = 0; j < size(); j++){
-                if (matriz[i][j] == null){
-                    System.out.print("    ");
-                } else {
-                    System.out.print(matriz[i][j] + "    ");
+            for (int i = 0; i < height(root()) + 1; i++){
+                for (int j = 0; j < size() + 1; j++){
+                    if (matriz[i][j] == null){
+                        System.out.print("    ");
+                    } else {
+                        System.out.print(matriz[i][j] + "    ");
+                    }
                 }
-            }
-            System.out.println("");
+                System.out.println("");
+            }    
         }
+        
     }
 
     private void visuals(Object[][] ob, No no){
@@ -254,35 +275,6 @@ public class Avbp{
             visuals(ob, rightchild(no));
         }
     }
-
-    // public void mostrar() {
-    //     mostrarRecursivo(root(), 0);
-    // }
-
-    // private void mostrarRecursivo(No no, int nivel) {
-    //     if (no == null) return;
-
-    //     // 1. Visita o lado direito primeiro (para o topo da árvore ficar na esquerda da tela)
-    //     if (hasright(no)) {
-    //         mostrarRecursivo(rightchild(no), nivel + 1);
-    //     }
-
-    //     // 2. Imprime o nó atual com recuo baseado no nível (profundidade)
-    //     for (int i = 0; i < nivel; i++) {
-    //         System.out.print("    "); // 4 espaços por nível de profundidade
-    //     }
-    //     if (no == root()){
-    //         System.out.println(no.getelement() + " (Chave: " + no.getkey() + ")");
-    //     } else{
-    //         System.out.println(no.getelement() + " (Chave: " + no.getkey() + ")" + " (Chave: " + (no.getfather()).getkey() + ")");
-    //     }
-        
-
-    //     // 3. Visita o lado esquerdo
-    //     if (hasleft(no)) {
-    //         mostrarRecursivo(leftchild(no), nivel + 1);
-    //     }
-    // }
 
     private void pre_order(No v, ArrayList<Object> lista){
         if (v == null){

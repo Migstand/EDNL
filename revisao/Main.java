@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Random;
 
+
 public class Main{
     public static void main(String[] args){
         
@@ -23,11 +24,12 @@ public class Main{
         int a = (pesca.root()).getkey();
         int valor;
         for (int i = 0; i < a; i++){
-            System.out.println(i);
+            
             // ini = sc.nextInt();
             // ini_ele = so.nextLine();
             valor = ran.nextInt(a*2);
             pesca.insert(valor, valor);
+            
             // if (i < a/2){
             //     //System.out.println(a/2 + (i + 1) + " Ola" + i);
             //     pesca.insert(a/2 + (i + 1), "Ola" + i); 
@@ -38,22 +40,25 @@ public class Main{
             //pesca.insert(i+1, "Ola" + i);
         }
         System.out.println(pesca.height(pesca.root()) + " Altura");
-
-        pesca.mostrar();
+        System.out.println(pesca.size() + " Tamanho inicial");
+        //pesca.mostrar();
 
         System.out.println("---------------------------------------");
         System.out.println(" ");
 
         int s = pesca.size();
-        for (int i = 0; i < s; i++){
-            pesca.mostrar();
-            System.out.println("---------------------------------------");
-            System.out.println(" ");
+        for (int i = 0; i < s/2; i++){
+            //System.out.println("---------------------------------------");
+            //System.out.println(" ");
             pesca.remove((pesca.root().getkey()));
+            
         }
+        System.out.println(pesca.size() + " Tamanho final");
 
+        //pesca.mostrar();
         System.out.println("---------------------------------------");
         System.out.println(" ");
+        //System.out.println(pesca.root().getkey());
 
         // Iterator<No> it = (pesca.nos()).iterator();
         // while (it.hasNext()){
