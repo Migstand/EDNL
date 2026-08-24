@@ -113,7 +113,7 @@ public class Avl extends Avbp{
         
     }
 
-
+    // Goku SSJ 8
     private void inbalance(No no, int fb){ // Existem alguns erros que vão acontecer ao implementar a Avl. Possíveis alterações na Avbp;
        
         // Estrutura lógica do balanceamento da árvore. Apenas para idealização do que será feito
@@ -140,7 +140,7 @@ public class Avl extends Avbp{
         }    
     }
 
-
+    // Vegeta SSJ 8
     private void rebalance(No no, int fb){ // Existem alguns erros que vão acontecer ao implementar a Avl. Possíveis alterações na Avbp;
        
         // Estrutura lógica do balanceamento da árvore. Apenas para idealização do que será feito
