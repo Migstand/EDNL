@@ -24,16 +24,36 @@ public class Teste{
         int a = (avl.root()).getkey();
         int valor;
         No check;
+        
         for (int i = 0; i < a; i++){
+            //valor = (13+i);
             valor = ran.nextInt(a*2);
-            check = avl.insert(valor, valor);
+            avl.insert(valor, valor);
             //System.out.println(check.getkey() + " Fb: " + check.getfb());
-            avl.mostrar();
+            //avl.mostrar();
         }
+
+        // for (int i = 0; i < a; i++){
+        //     valor = (13+i);
+        //     //valor = ran.nextInt(a*2);
+        //     check = avl.insert(valor, valor);
+        //     //System.out.println(check.getkey() + " Fb: " + check.getfb());
+        //     avl.mostrar();
+        // }
+
+        // ArrayList<Object> list = avl.elements();
+
+        // for (int i = 0; i < list.size(); i++){
+        //     System.out.println(list.size());
+        // }
+        //System.out.println(avl.leftchild(avl.root()).getfb());
+        System.out.println(avl.rightchild(avl.root()).getfb());
+        
+        
 
         System.out.println(avl.height(avl.root()) + " Altura");
         System.out.println(avl.size() + " Tamanho inicial");
-        avl.mostrar();
+        //avl.mostrar_fb();
 
         System.out.println("---------------------------------------");
         System.out.println(" ");

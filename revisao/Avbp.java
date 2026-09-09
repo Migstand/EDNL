@@ -38,7 +38,13 @@ public class Avbp{
     }
 
     public boolean isRoot(No no){
-        return no == this.raiz;
+        return no.getfather() == null;
+    }
+
+    public void setRoot(No no){
+        if (isRoot(no)){
+            this.raiz = no;
+        }
     }
 
     public boolean isInternal(No no){
@@ -148,7 +154,7 @@ public class Avbp{
         // return "Não encontrado";
     }
 
-    public void insert(int key, Object ele){
+    public No insert(int key, Object ele){
         No no = find(key, this.raiz);
         //System.out.println(no.getkey() + " A chave check " + key);
         if(no.getkey() != key){
@@ -158,28 +164,32 @@ public class Avbp{
             } else{
                 no.setleft(new_no);
             }
-            this.size++;
+            upsize();
+            //return new_no;
             //System.out.println("O Elemento " + new_no.getelement() + " de chave " + new_no.getkey() + " foi inserido");
         } else{
             //System.out.println("O Elemento " + no.getelement() + " de chave " + no.getkey() + " já inserido");
         }
+        return no;
         
     }
 
-    public void remove(int key){
+    public No remove(int key){
         No removed = find(key, this.raiz);
         Object ele = removed.getelement();
         if(key!=removed.getkey()){
             System.out.println("Elemento não encontrado");
+            return removed;
         } else{
+            No father = removed.getfather();
             if (isExternal(removed)){
                 if (isRoot(removed)){
                     this.raiz = null;
                 } else{
                     if ((removed.getfather()).getkey() < key){
-                        (removed.getfather()).setleft(null);
-                    }else{
                         (removed.getfather()).setright(null);
+                    }else{
+                        (removed.getfather()).setleft(null);
                     }
                 }
                 //removed.setfather(null);
@@ -219,6 +229,7 @@ public class Avbp{
                         copy = leftchild(copy);
                     }
 
+                    father = copy.getfather();
                     replace(removed, copy);
                     if (verif != copy){
                         (copy.getfather()).setleft(rightchild(copy));
@@ -237,7 +248,8 @@ public class Avbp{
             }
 
             removed = null;
-            this.size--;
+            downsize();
+            return father;
         }
         
     }
@@ -306,5 +318,13 @@ public class Avbp{
             No prox = meus_fi.next();
             pre_orderNo(prox, lista);
         }
+    }
+
+    private void downsize(){
+        this.size--;
+    }
+
+    private void upsize(){
+        this.size++;
     }
 }
