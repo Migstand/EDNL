@@ -30,7 +30,9 @@ public class Teste{
             valor = ran.nextInt(a*2);
             avl.insert(valor, valor);
             //System.out.println(check.getkey() + " Fb: " + check.getfb());
-            //avl.mostrar();
+            //avl.mostrar_fb();
+            //System.out.println("---------------------------------------");
+            //System.out.println(" ");
         }
 
         // for (int i = 0; i < a; i++){
@@ -53,22 +55,23 @@ public class Teste{
 
         System.out.println(avl.height(avl.root()) + " Altura");
         System.out.println(avl.size() + " Tamanho inicial");
-        //avl.mostrar_fb();
+        avl.mostrar_fb();
 
         System.out.println("---------------------------------------");
         System.out.println(" ");
 
         int s = avl.size();
-        // for (int i = 0; i < s/2; i++){
-        //     //System.out.println("---------------------------------------");
-        //     //System.out.println(" ");
-        //     avl.remove((avl.root().getkey()));
+        for (int i = 0; i < s/2; i++){
+            //System.out.println("---------------------------------------");
+            //System.out.println(" ");
+            avl.remove((avl.root().getkey()));
             
-        // }
+        }
         System.out.println(avl.size() + " Tamanho final");
 
         System.out.println("---------------------------------------");
         System.out.println(" ");
+        avl.mostrar_fb();
 
         long tempoFinal = System.nanoTime();
         long tempoTotalNano = tempoFinal - tempoInicial;

@@ -17,7 +17,7 @@ public class Avl extends Avbp{
     public No insert(int key, Object ele){
         No no = super.insert(key, ele);
         int fb = 0;
-        System.out.println("Foi inserido o "+ key);
+        //System.out.println("Foi inserido o "+ key);
         if (no != null){ //
             if (no.getkey() != key){
                 if (no.getkey() > key){
@@ -26,10 +26,13 @@ public class Avl extends Avbp{
                 if (no.getkey() < key){
                     fb = -1;
                 }
+            } else{
+                return no;
             }
             
+        }else{
+            return no;
         }
-        
         inbalance(no, fb);
         return no;
     }
@@ -37,19 +40,26 @@ public class Avl extends Avbp{
     @Override
     public No remove(int key){
         No father = super.remove(key);
-        System.out.println("Foi removido o "+ father.getkey());
+        //System.out.println("Foi removido o "+ father.getkey());
         int fb = 0;
         
         if (father != null){
-            if (father.getkey() > key){
-                fb = 1;
+            if (father.getkey() != key){
+                if (father.getkey() > key){
+                    fb = -1;
+                }
+                if (father.getkey() < key){
+                    fb = 1;
+                }
+            }else{
+                return father;
             }
-            if (father.getkey() < key){
-                fb = -1;
-            }
+                
+        } else{
+            return father;
         }
 
-        //rebalance(father, fb);
+        rebalance(father, fb);
         return father;
     }
 
@@ -63,6 +73,7 @@ public class Avl extends Avbp{
             no.setfb(no.getfb() + fb);
             //System.out.println(no.getkey() + " Fb: " + no.getfb());
             if (no.getfb() > 1 || no.getfb() < -1){
+                //System.out.println("Problema 4 aqui em: " + no.getkey());
                 chosebalance(no);
             }
             if (no.getfb() == 0 ){//|| no.getfather().getfb() == 0
@@ -70,7 +81,7 @@ public class Avl extends Avbp{
                 break;
             }
 
-
+            // O ERRO SE ENCONTRA NESSA PARTE
             // Verificação feita na raiz
             if (no.getfather() != null){
                 if (no == leftchild(no.getfather())){
@@ -101,9 +112,9 @@ public class Avl extends Avbp{
             // Verificação feita na raiz
             if (no.getfather() != null){
                 if (no == leftchild(no.getfather())){
-                    fb = 1;
-                }else{
                     fb = -1;
+                }else{
+                    fb = 1;
                 }
             }
             
@@ -121,6 +132,9 @@ public class Avl extends Avbp{
 
         // }
         No lefi = leftchild(no);
+        if (lefi == null){
+            System.out.println("Nó bugado " + no.getkey() + " de fb: "+ no.getfb());
+        }
         //System.out.println("Filho esquerdo " + lefi.getkey() + " de fb: "+ lefi.getfb());
         No olrifi = rightchild(lefi);
         //System.out.println("Antigo Filho direito " + olrifi.getkey() + " de fb: "+ olrifi.getfb());
@@ -183,6 +197,9 @@ public class Avl extends Avbp{
 
         No rifi = rightchild(no);
         //System.out.println("Filho direito " + rifi.getkey() + " de fb: "+ rifi.getfb());
+        if (rifi == null){
+            System.out.println("Nó bugado " + no.getkey() + " de fb: "+ no.getfb());
+        }
         No ollefi = leftchild(rifi);
         //System.out.println("Antigo Filho esquerdo " + ollefi.getkey() + " de fb: "+ ollefi.getfb());
 
@@ -241,13 +258,13 @@ public class Avl extends Avbp{
     }
 
     private void dublerbalance(No no){
-        //System.out.println("Faça as balanças R Dupla");
+        //System.out.println("O nó podre é: " + no.getkey() + " de fb: " + no.getfb());
         simplelbalance(leftchild(no));
         simplerbalance(no);
     }
 
     private void dublelbalance(No no){
-        //System.out.println("Faça as balanças L dupla");
+        //System.out.println("O nó podre é: " + no.getkey() + " de fb: " + no.getfb());
         simplerbalance(rightchild(no));
         simplelbalance(no);
     }
@@ -281,9 +298,9 @@ public class Avl extends Avbp{
             for (int i = 0; i < height(root()) + 1; i++){
                 for (int j = 0; j < size() + 1; j++){
                     if (matriz[i][j] == null){
-                        System.out.print("    ");
+                        System.out.print("  ");
                     } else {
-                        System.out.print(matriz[i][j] + "    ");
+                        System.out.print(matriz[i][j] + "  ");
                     }
                 }
                 System.out.println("");
@@ -296,13 +313,13 @@ public class Avl extends Avbp{
         if (hasleft(no)){
             visuals(ob, leftchild(no));
         }
-        // System.out.println(this.num);
-        // if (no.getfather() != null){
-        //     ob[depth(no)][this.num] = no.getelement() + " [" + no.getfb()+ "]" + no.getfather().getkey();    
-        // } else {
-        //     ob[depth(no)][this.num] = no.getelement() + " [" + no.getfb()+ "]";
-        // }
-        ob[depth(no)][this.num] = no.getelement() + " [" + no.getfb()+ "]";
+        //System.out.println(this.num);
+        if (no.getfather() != null){
+            ob[depth(no)][this.num] = no.getelement() + " [" + no.getfb()+ "]" + no.getfather().getkey();    
+        } else {
+            ob[depth(no)][this.num] = no.getelement() + " [" + no.getfb()+ "]";
+        }
+        //ob[depth(no)][this.num] = no.getelement() + " [" + no.getfb()+ "]";
         ++this.num;
         if (hasright(no)){
             visuals(ob, rightchild(no));
