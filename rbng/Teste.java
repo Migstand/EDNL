@@ -29,14 +29,14 @@ public class Teste{
 
         int a = (rub.root()).getkey();
         int valor;
-        No check;
+        //No check;
         
         for (int i = 0; i < a; i++){
             valor = ran.nextInt(a*2);
             rub.insert(valor, valor);
         }
 
-        //rub.mostrar_cores();
+        rub.mostrar_cores();
         
         long tempoFinal = System.nanoTime();
         long tempoTotalNano = tempoFinal - tempoInicial;

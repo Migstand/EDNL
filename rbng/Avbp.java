@@ -157,6 +157,11 @@ public class Avbp{
     public No insert(int key, Object ele){
         No no = find(key, this.raiz);
         //System.out.println(no.getkey() + " A chave check " + key);
+        if (no == null){
+            No new_no = new No(key, ele, no);
+            this.raiz = new_no;
+            return new_no;
+        }
         if(no.getkey() != key){
             No new_no = new No(key, ele, no);
             if (key > no.getkey()){
@@ -165,12 +170,13 @@ public class Avbp{
                 no.setleft(new_no);
             }
             upsize();
-            //return new_no;
+            return new_no;
             //System.out.println("O Elemento " + new_no.getelement() + " de chave " + new_no.getkey() + " foi inserido");
         } else{
             //System.out.println("O Elemento " + no.getelement() + " de chave " + no.getkey() + " já inserido");
         }
-        return no;
+        No dont = new No(key + 1, null, null);
+        return dont;
         
     }
 
