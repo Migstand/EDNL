@@ -1,4 +1,4 @@
-public interface IRN{
-    public void verificar();
+// public interface IRN{
+//     public void verificar();
     
-}
+// }

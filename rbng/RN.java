@@ -13,7 +13,9 @@ public class RN extends Avbp{
     public No insert(int key, Object ele){
         No no = super.insert(key, ele);
         
-        if (no.getkey() == key){
+        
+        if (no.getkey() != -1){
+            //System.out.println(no.getkey());
             insert_verif(no);   
         }
 
@@ -41,6 +43,9 @@ public class RN extends Avbp{
                             avo.setcor(1);
 
                             insert_verif(avo);
+                        }
+                        else{
+                            rotations(no, pai, avo);
                         }
                     } 
                     // CASO 3: Tio Negro
@@ -73,23 +78,37 @@ public class RN extends Avbp{
             
             // Rotação simples para direita
             if (leftchild(avo) == pai){
+                //System.out.println(" SRR ");
                 simple_right_rot(avo, pai);
+                pai.setcor(0);
+                avo.setcor(1);
             } 
             
             // Rotação dupla para esquerda
             else{
-                double_left_rot(avo, pai);
+                double_left_rot(avo, pai, no);
+                //System.out.println(" DLR "+ pai.getkey());
+                pai.setcor(1);
+                avo.setcor(1);
+                no.setcor(0);
             }
         } else{
 
             // Rotação simples para esquerda
             if (rightchild(avo) == pai){
+                //System.out.println(" SLR " + pai.getkey());
                 simple_left_rot(avo, pai);
+                pai.setcor(0);
+                avo.setcor(1);
             }
 
             // Rotação dupla para direita
             else{
-                double_right_rot(avo, pai);
+                double_right_rot(avo, pai, no);
+                //System.out.println(" DRR " + pai.getkey());
+                pai.setcor(1);
+                avo.setcor(1);
+                no.setcor(0);
             }
         }
     }
@@ -104,7 +123,7 @@ public class RN extends Avbp{
 
         // Caso exita um nó
         if (bisavo != null){
-            if (bisavo.getkey() > pai.getkey()){
+            if (bisavo.getkey() < pai.getkey()){
                 bisavo.setright(pai);
             }else{
                 bisavo.setleft(pai);
@@ -130,7 +149,7 @@ public class RN extends Avbp{
 
         // Caso exita um nó
         if (bisavo != null){
-            if (bisavo.getkey() > pai.getkey()){
+            if (bisavo.getkey() < pai.getkey()){
                 bisavo.setright(pai);
             }else{
                 bisavo.setleft(pai);
@@ -145,14 +164,85 @@ public class RN extends Avbp{
         if (antigo_esquerdo != null){
             antigo_esquerdo.setfather(avo);
         }
+
     }
 
-    private void double_right_rot(No avo, No pai){
+    private void double_right_rot(No avo, No pai, No filho){
+        // simple_left_rot(pai, filho);
+        // simple_right_rot(avo, pai);
+        No antigo_esquerdo = leftchild(filho);
+        No antigo_direito = rightchild(filho);
+        No bisavo = avo.getfather();
         
+        avo.setfather(filho);
+        pai.setfather(filho);
+        filho.setfather(bisavo);
+
+        // Filho modificações
+        filho.setleft(pai);
+        filho.setright(avo);
+
+        // Parentes modificações
+        pai.setright(antigo_esquerdo);
+        if (antigo_esquerdo != null){
+            antigo_esquerdo.setfather(pai);
+        }
+
+        avo.setleft(antigo_direito);
+        if (antigo_direito != null){
+            antigo_direito.setfather(avo);
+        }
+
+        if (bisavo != null){
+            if (bisavo.getkey() < filho.getkey()){
+                bisavo.setright(filho);
+            }else{
+                bisavo.setleft(filho);
+            }
+        } else{
+            setRoot(filho); // EU ACHO QUE É MEIO RUIM FAZER ISSO MAS É O JEITO MAIS SEGURO
+        }
+        
+
     }
 
-    private void double_left_rot(No avo, No pai){
+    private void double_left_rot(No avo, No pai, No filho){
+        // simple_right_rot(pai, filho);
+        // simple_left_rot(avo, pai);   
+
+        No antigo_esquerdo = leftchild(filho);
+        No antigo_direito = rightchild(filho);
+        No bisavo = avo.getfather();
         
+        avo.setfather(filho);
+        pai.setfather(filho);
+        filho.setfather(bisavo);
+
+        // Filho modificações
+        filho.setright(pai);
+        filho.setleft(avo);
+
+        // Parentes modificações
+        pai.setleft(antigo_direito);
+        if (antigo_direito != null){
+            antigo_direito.setfather(pai);
+        }
+        
+        avo.setright(antigo_esquerdo);
+        if (antigo_esquerdo != null){
+            antigo_esquerdo.setfather(avo);
+        }
+        
+        if (bisavo != null){
+            if (bisavo.getkey() < filho.getkey()){
+                bisavo.setright(filho);
+            }else{
+                bisavo.setleft(filho);
+            }
+        } else{
+            setRoot(filho); // EU ACHO QUE É MEIO RUIM FAZER ISSO MAS É O JEITO MAIS SEGURO
+        }
+
     }
     public void mostrar_cores(){
         
@@ -187,10 +277,53 @@ public class RN extends Avbp{
         } else {
             ob[depth(no)][this.num] = no.getkey() + " [Rubro] ";
         }
+        // if (hasleft(no)){
+        //     ob[depth(no)][this.num] += " Esq " + leftchild(no).getkey();
+        // }
+        // if (hasright(no)){
+        //     ob[depth(no)][this.num] += " Dir " + rightchild(no).getkey();
+        // }
         //ob[depth(no)][this.num] = no.getelement() + " [" + no.getfb()+ "]";
         ++this.num;
         if (hasright(no)){
             visuals(ob, rightchild(no));
         }
+    }
+
+    // METODO ALTERNA TIVO DE DESENHO
+    public void desenharArvore(No no) {
+        desenharArvore(no, "", true);
+    }
+
+    private void desenharArvore(No no, String prefixo, boolean ehDireita) {
+        if (no == null) {
+            return;
+        }
+
+        // Primeiro desenha o filho direito
+        desenharArvore(
+            rightchild(no),
+            prefixo + (ehDireita ? "│   " : "    "),
+            true
+        );
+
+        // Desenha o nó atual
+        if (no.getcor() == 0){
+            System.out.println(
+                prefixo + (ehDireita ? "└── " : "┌── ") + no.getkey() + " [Negro] "
+            );
+        } else{
+            System.out.println(
+                prefixo + (ehDireita ? "└── " : "┌── ") + no.getkey() + " [Rubro] "
+            );
+        }
+        
+
+        // Depois desenha o filho esquerdo
+        desenharArvore(
+            leftchild(no),
+            prefixo + (ehDireita ? "    " : "│   "),
+            false
+        );
     }
 }

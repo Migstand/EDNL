@@ -160,6 +160,7 @@ public class Avbp{
         if (no == null){
             No new_no = new No(key, ele, no);
             this.raiz = new_no;
+            upsize();
             return new_no;
         }
         if(no.getkey() != key){
@@ -175,7 +176,7 @@ public class Avbp{
         } else{
             //System.out.println("O Elemento " + no.getelement() + " de chave " + no.getkey() + " já inserido");
         }
-        No dont = new No(key + 1, null, null);
+        No dont = new No(-1, 'N', null);
         return dont;
         
     }

@@ -21,11 +21,11 @@ public class Teste{
 
         RN rub = new RN(ini, ini_ele);
 
-        if (rub.root().getcor() == 0){
-            System.out.println("Negro");
-        } else{
-            System.out.println("Rubro");
-        }
+        // if (rub.root().getcor() == 0){
+        //     System.out.println("Negro");
+        // } else{
+        //     System.out.println("Rubro");
+        // }
 
         int a = (rub.root()).getkey();
         int valor;
@@ -33,10 +33,39 @@ public class Teste{
         
         for (int i = 0; i < a; i++){
             valor = ran.nextInt(a*2);
+            //System.out.println(valor);
+            //System.out.println(" --------------------------------- ");
             rub.insert(valor, valor);
+            // rub.mostrar_cores();
+            
+            // System.out.println(" --------------------------------- ");
+            // System.out.println( " ");
+            // System.out.println( " ");
+
         }
 
-        rub.mostrar_cores();
+        // INSERÇÕES SÓ PARA DIREITA
+        // for (int i = 0; i < a; i++){
+        //     valor = (a + i);
+        //     rub.insert(valor, valor);
+        //     //rub.mostrar_cores();
+
+        //     // System.out.println(" --------------------------------- ");
+        //     // System.out.println( " ");
+        // }
+
+        // INSERÇÕES SÓ PARA ESQUERDA
+        // for (int i = 0; i < a; i++){
+        //     valor = (a - i);
+        //     rub.insert(valor, valor);
+        //     rub.mostrar_cores();
+        //     System.out.println(" --------------------------------- ");
+        //     System.out.println( " ");
+        // }
+
+        //rub.mostrar_cores();
+        // rub.desenharArvore(rub.root());
+        System.out.println(rub.size() + " Tamanho final");
         
         long tempoFinal = System.nanoTime();
         long tempoTotalNano = tempoFinal - tempoInicial;
