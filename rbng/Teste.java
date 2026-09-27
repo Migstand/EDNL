@@ -1,7 +1,7 @@
 package rbng;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+//import java.util.ArrayList;
+//import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -91,6 +91,8 @@ public class Teste{
         //rub.mostrar_cores();
         System.out.println(rub.size() + " Tamanho final");
         
+        sc.close();
+        so.close();
         long tempoFinal = System.nanoTime();
         long tempoTotalNano = tempoFinal - tempoInicial;
 
