@@ -31,6 +31,7 @@ public class Teste{
         int valor;
         //No check;
         
+        // INSERÇÕES AUTOMATICAS
         for (int i = 0; i < a; i++){
             valor = ran.nextInt(a*2);
             //System.out.println(valor);
@@ -43,6 +44,7 @@ public class Teste{
             // System.out.println( " ");
 
         }
+        //rub.mostrar_cores();
 
         // INSERÇÕES SÓ PARA DIREITA
         // for (int i = 0; i < a; i++){
@@ -66,16 +68,27 @@ public class Teste{
         //rub.mostrar_cores();
         // rub.desenharArvore(rub.root());
 
+        // System.out.println( " ");
+        System.out.println(" --------------------------------- ");
+        System.out.println( " ");        
+        System.out.println(" --------------------------------- ");
         // REMOÇÕES MANUAIS
 
-        for (int i = 0; i < 10; i++){
-            rub.mostrar_cores();
-            valor = sc.nextInt();
+        // for (int i = 0; i < 10; i++){
+        //     rub.mostrar_cores();
+        //     //rub.desenharArvore(rub.root());
+        //     valor = sc.nextInt();
+        //     rub.remove(valor);
+        //     System.out.println(rub.size());
+        // }
+
+        // REMOÇÕES AUTOMATICAS
+        for (int i = 0; i < a/2; i++){
+            valor = ran.nextInt(a*2);
             rub.remove(valor);
-            System.out.println(rub.size());
         }
 
-        rub.mostrar_cores();
+        //rub.mostrar_cores();
         System.out.println(rub.size() + " Tamanho final");
         
         long tempoFinal = System.nanoTime();

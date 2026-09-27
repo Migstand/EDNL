@@ -189,7 +189,7 @@ public class Avbp{
             return new_No;    
         }
         if(key!=removed.getkey()){
-            System.out.println("Elemento não encontrado");
+            //System.out.println("Elemento não encontrado");
             No new_No = new No(-1, 0, null);
             return new_No;
 
@@ -214,7 +214,7 @@ public class Avbp{
                 new_No.setcor(removed.getcor());
                 
                 removed.setfather(null);
-                
+                return new_No;
                 
 
                 
@@ -244,7 +244,7 @@ public class Avbp{
                         }
                         
                         //No falso com a referência da cor do sucessor
-                        No new_No = new No(key, 0, quant.get(0));
+                        No new_No = new No(quant.get(0).getkey(), 0, quant.get(0));
                         new_No.setcor(quant.get(0).getcor());
                         
                         // NÃO É O IDEAL MAS FIZ PARA FAZWE AJUSTE
@@ -274,7 +274,7 @@ public class Avbp{
                     }
                     
                     //No falso com a referência da cor do sucessor
-                    No new_No = new No(key, 0, father);
+                    No new_No = new No(copy.getkey(), 0, father);
                     new_No.setcor(copy.getcor());
 
                     copy = null;
@@ -285,8 +285,8 @@ public class Avbp{
 
             
                 
-            removed = null;
-            return removed;
+            //removed = null;
+            //return removed;
         }
         
     }

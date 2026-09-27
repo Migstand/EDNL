@@ -76,11 +76,12 @@ public class RN extends Avbp{
     }
 
     private void remove_verif(No no){
-        if (no.getcor() == 0 ){ //&& (isRoot(no) == false)
+        if (no.getcor() == 0 && (isRoot(no) == false)){ //
 
             // Caso 3:
             No pai = no.getfather();
             No bro = getbro(no);
+            // System.out.println(bro.getkey());
             if (bro != null){
                 
                 // Caso 3.1:
@@ -108,16 +109,18 @@ public class RN extends Avbp{
                     
                     // VERIFICAÇÕES DE SUBRINHOS FACILITADAS
                     if (subrinhos[0] != null){
-                        if (subrinhos[0].getkey() == 1){
+                        if (subrinhos[0].getcor() == 1){
                             prox = 1;
                         }   
                     }
 
                     if (subrinhos[1] != null){
-                        if (subrinhos[1].getkey() == 1){
+                        if (subrinhos[1].getcor() == 1){
                             dist = 1;
                         }   
                     }
+                    //System.out.println( "Próximo: " + prox + ", Distante: " + dist);
+                    //System.out.println("Nó de análise: " + no.getkey());
 
                     // Caso 3.2:
                     if (prox == 0 && dist == 0){
@@ -134,6 +137,17 @@ public class RN extends Avbp{
                             pai.setcor(0);
 
                             // FIM DUPLO NEGRO
+                            if (isInternal(bro)){
+                                if (hasleft(bro)){
+                                    if (leftchild(bro).getcor() == 1){
+                                        insert_verif(leftchild(bro));
+                                    }
+                                } else{
+                                    if (rightchild(bro).getcor() == 1)
+                                        insert_verif(rightchild(bro));            
+                                    }
+                            }
+                            
                         }
                     }
                     
@@ -141,9 +155,9 @@ public class RN extends Avbp{
                     if (prox == 1 && dist == 0){
 
                         if (bro.getkey() > no.getkey()){ // Um possível local para erros
-                            simple_right_rot(subrinhos[0], bro);
+                            simple_right_rot(bro, subrinhos[0]);
                         } else{
-                            simple_left_rot(subrinhos[0], bro);
+                            simple_left_rot(bro, subrinhos[0]);
                         }
 
                         bro.setcor(prox);
@@ -155,9 +169,9 @@ public class RN extends Avbp{
                     // 3.4
                     if (dist == 1){
                         if (bro.getkey() > no.getkey()){ // Um possível local para erros
-                            simple_left_rot(leftchild(pai), pai);
+                            simple_left_rot(pai, rightchild(pai));
                         } else{
-                            simple_right_rot(rightchild(pai), pai);
+                            simple_right_rot(pai, leftchild(pai));
                         }
 
                         bro.setcor(pai.getcor());
@@ -179,6 +193,7 @@ public class RN extends Avbp{
                 else{
                     pai.setcor(0);
                     // FIM DUPLO NEGRO
+                    insert_verif(bro);
                 }
         }
         }
