@@ -183,15 +183,25 @@ public class Avbp{
 
     public No remove(int key){
         No removed = find(key, this.raiz);
-        Object ele = removed.getelement();
+        if (removed == null){
+            System.out.println("Essa árvore não tem elementos");
+            No new_No = new No(-1, 0, null);
+            return new_No;    
+        }
         if(key!=removed.getkey()){
             System.out.println("Elemento não encontrado");
-            return removed;
+            No new_No = new No(-1, 0, null);
+            return new_No;
+
         } else{
+            downsize();
             No father = removed.getfather();
             if (isExternal(removed)){
                 if (isRoot(removed)){
                     this.raiz = null;
+                    No new_No = new No(-1, 0, null);
+                    return new_No;
+
                 } else{
                     if ((removed.getfather()).getkey() < key){
                         (removed.getfather()).setright(null);
@@ -199,8 +209,15 @@ public class Avbp{
                         (removed.getfather()).setleft(null);
                     }
                 }
-                //removed.setfather(null);
+                //No falso com a referência da cor do sucessor
+                No new_No = new No(key, 0, removed.getfather());
+                new_No.setcor(removed.getcor());
+                
                 removed.setfather(null);
+                
+                
+
+                
             
             } else{
                 ArrayList <No> quant = children(removed);
@@ -210,22 +227,30 @@ public class Avbp{
                     // Implementar catch para o caso 
                     if (isRoot(removed)){
                         quant.get(0).setfather(null);
+                        quant.get(0).setcor(0);
                         this.raiz = quant.get(0);
+
+                        // Se só existe a raiz não precisa ser feito nada.
+                        No new_No = new No(-1, 0, null);
+                        return new_No;
                     } //
                     else{
                         if ((removed.getfather()).getkey() < key){
                             (removed.getfather()).setright(quant.get(0));
                             (quant.get(0)).setfather(removed.getfather());
-                            // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
-                            // new_no.setleft(leftchild(quant.get(0)));
-                            // new_no.setright(rightchild(quant.get(0)));
                         } else{
                             (removed.getfather()).setleft(quant.get(0));
                             (quant.get(0)).setfather(removed.getfather());
-                            // No new_no = new No((quant.get(0)).getkey(), (quant.get(0)).getelement(), removed.getfather());
-                            // new_no.setleft(leftchild(quant.get(0)));
-                            // new_no.setright(rightchild(quant.get(0)));
                         }
+                        
+                        //No falso com a referência da cor do sucessor
+                        No new_No = new No(key, 0, quant.get(0));
+                        new_No.setcor(quant.get(0).getcor());
+                        
+                        // NÃO É O IDEAL MAS FIZ PARA FAZWE AJUSTE
+                        quant.get(0).setcor(removed.getcor());
+                        
+                        return new_No;
                     }
                     
                 } else{
@@ -247,16 +272,21 @@ public class Avbp{
                     if (rightchild(copy) != null){
                         rightchild(copy).setfather(copy.getfather());
                     }
-            
+                    
+                    //No falso com a referência da cor do sucessor
+                    No new_No = new No(key, 0, father);
+                    new_No.setcor(copy.getcor());
+
                     copy = null;
-                
+                    return new_No;
                 }
                 //System.out.println("O Elemento " + ele + " foi removido!");
             }
 
+            
+                
             removed = null;
-            downsize();
-            return father;
+            return removed;
         }
         
     }

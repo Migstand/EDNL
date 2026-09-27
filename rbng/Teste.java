@@ -65,6 +65,17 @@ public class Teste{
 
         //rub.mostrar_cores();
         // rub.desenharArvore(rub.root());
+
+        // REMOÇÕES MANUAIS
+
+        for (int i = 0; i < 10; i++){
+            rub.mostrar_cores();
+            valor = sc.nextInt();
+            rub.remove(valor);
+            System.out.println(rub.size());
+        }
+
+        rub.mostrar_cores();
         System.out.println(rub.size() + " Tamanho final");
         
         long tempoFinal = System.nanoTime();

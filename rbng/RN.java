@@ -1,5 +1,6 @@
 package rbng;
 
+//import java.util.ArrayList;
 public class RN extends Avbp{
     private int num = 0;
 
@@ -21,6 +22,19 @@ public class RN extends Avbp{
 
         return no;
     }
+
+    @Override
+    public No remove(int key){
+        No no = super.remove(key);
+
+        if (no.getkey() != -1){
+            remove_verif(no);
+        }
+
+        return no;
+    }
+
+
 
     private void insert_verif(No no){
         if (isRoot(no)){
@@ -61,10 +75,120 @@ public class RN extends Avbp{
         
     }
 
+    private void remove_verif(No no){
+        if (no.getcor() == 0 ){ //&& (isRoot(no) == false)
+
+            // Caso 3:
+            No pai = no.getfather();
+            No bro = getbro(no);
+            if (bro != null){
+                
+                // Caso 3.1:
+                if (bro.getcor() == 1){
+                    
+                    // Lado que está torto;
+                    if (pai.getkey() > no.getkey()){
+                        simple_left_rot(pai, bro);
+                    }else{
+                        simple_right_rot(pai, bro);
+                    }
+
+                    pai.setcor(1);
+                    bro.setcor(0);
+                    remove_verif(no);
+                    
+                }
+                // IRMÃO NEGRO
+                else{
+                    
+                    No[] subrinhos = subrinhos(no.getkey(), bro);
+                    
+                    int prox = 0; 
+                    int dist = 0;
+                    
+                    // VERIFICAÇÕES DE SUBRINHOS FACILITADAS
+                    if (subrinhos[0] != null){
+                        if (subrinhos[0].getkey() == 1){
+                            prox = 1;
+                        }   
+                    }
+
+                    if (subrinhos[1] != null){
+                        if (subrinhos[1].getkey() == 1){
+                            dist = 1;
+                        }   
+                    }
+
+                    // Caso 3.2:
+                    if (prox == 0 && dist == 0){
+                        
+                        // Caso 3.2a:
+                        if (pai.getcor() == 0){
+                            bro.setcor(1);
+                            remove_verif(pai);
+                        }
+                        
+                        // Caso 3.2b:
+                        else{
+                            bro.setcor(1);
+                            pai.setcor(0);
+
+                            // FIM DUPLO NEGRO
+                        }
+                    }
+                    
+                    // Caso 3.3:
+                    if (prox == 1 && dist == 0){
+
+                        if (bro.getkey() > no.getkey()){ // Um possível local para erros
+                            simple_right_rot(subrinhos[0], bro);
+                        } else{
+                            simple_left_rot(subrinhos[0], bro);
+                        }
+
+                        bro.setcor(prox);
+                        subrinhos[0].setcor(0);
+
+                        remove_verif(no);
+                    }
+
+                    // 3.4
+                    if (dist == 1){
+                        if (bro.getkey() > no.getkey()){ // Um possível local para erros
+                            simple_left_rot(leftchild(pai), pai);
+                        } else{
+                            simple_right_rot(rightchild(pai), pai);
+                        }
+
+                        bro.setcor(pai.getcor());
+                        pai.setcor(0);
+                        subrinhos[1].setcor(0);
+
+                        // FIM DO DUPLO NEGRO
+
+                    }
+                    
+                }
+            }
+            else{
+                // Caso 3.2a:
+                if (pai.getcor() == 0){
+                    remove_verif(pai);
+                }
+                // Caso 3.2b:
+                else{
+                    pai.setcor(0);
+                    // FIM DUPLO NEGRO
+                }
+        }
+        }
+
+    }
+
     private No getbro(No no){
         No painho = no.getfather();
         No bro;
-        if (leftchild(painho) == no){
+        if (painho.getkey() > no.getkey()){
             bro = rightchild(painho);
         } else{
             bro = leftchild(painho);
@@ -111,6 +235,22 @@ public class RN extends Avbp{
                 no.setcor(0);
             }
         }
+    }
+
+    private No[] subrinhos(int key, No bro){
+        No[] subrinhos = new No[2];
+        // 0: Subrinho proximo
+        // 1: Subrinho distante
+        
+        if (key > bro.getkey()){
+            subrinhos[0] = rightchild(bro);
+            subrinhos[1] = leftchild(bro);
+        } else{
+            subrinhos[0] = leftchild(bro);
+            subrinhos[1] = rightchild(bro);
+        }
+
+        return subrinhos;
     }
 
     private void simple_right_rot(No avo, No pai){
