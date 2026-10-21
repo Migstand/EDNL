@@ -1,9 +1,10 @@
-package grafos;
+package grafos.matriz;
 
 import java.util.Scanner;
+import java.util.Iterator;
 //import java.util.Random;
 
-public class Main{
+public class Teste{
     public static void main(String[] args){
 
         long tempoInicial = System.nanoTime();
@@ -12,6 +13,24 @@ public class Main{
         Scanner so = new Scanner(System.in);
         // Random ran = new Random();
 
+        int ke = sc.nextInt();
+        Object ob = so.nextLine();
+
+        Grafo grafo = new Grafo(ke, ob);
+
+        Iterator<Vertice> vets = grafo.vertices();
+
+        Vertice vet;
+        while (vets.hasNext()){
+            vet = vets.next();
+            System.out.println(vet.getelement());
+        }
+    
+        grafo.inserirAresta(vet, vet, "Oi");
+
+        System.out.println("------------------------");
+
+        grafo.draw();
 
         sc.close();
         so.close();
