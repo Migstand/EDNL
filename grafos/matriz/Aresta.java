@@ -22,7 +22,7 @@ public class Aresta{
         fim = end;
     }
 
-    public void setvalor(Object o){
+    public void setelement(Object o){
         valor = o;
     }
 
@@ -34,7 +34,7 @@ public class Aresta{
         return fim;
     }
     
-    public Object getvalor(){
+    public Object getelement(){
         return valor;
     }
     

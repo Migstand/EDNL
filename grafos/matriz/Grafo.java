@@ -40,7 +40,7 @@ public class Grafo{
     }
 
     public boolean adjacent(Vertice v, Vertice w){
-        return grafo[v.getkey()][w.getkey()] != null;
+        return (grafo[v.getkey()][w.getkey()] != null) || (grafo[w.getkey()][v.getkey()] != null);
     }
     // ----------- \\
 
@@ -50,7 +50,7 @@ public class Grafo{
     }
 
     public void substituira(Aresta a, Object x){
-        a.setvalor(x);
+        a.setelement(x);
     }
     // --------------- \\
 
@@ -105,14 +105,27 @@ public class Grafo{
         int size = grafo.length;
         int chave = v.getkey();
 
-        Object[][] new_graf = new Object[size-1][size-1]; 
-        for (int i = 0; i < size-1; i++){
-            if (i == chave){i++;}
-            for (int j = 0; j < size; j++){
+        Aresta[][] new_graf = new Aresta[size-1][size-1]; 
+        for (int i = 0; i < size; i++){
+            if (i == chave){continue;}
+            for (int j = 0; j < size-1; j++){
                 if (j == chave) {j++;}
-                new_graf[i][j] = grafo[i][j];
+                else{new_graf[i][j] = grafo[i][j];}
             }
         }
+
+        // Momentaneo \\
+        int[][] new_fake = new int[size-1][size-1]; 
+        for (int i = 0; i < size; i++){
+            if (i == chave){continue;}
+            for (int j = 0; j < size; j++){
+                if (j == chave) {j++;}
+                else{new_fake[i][j] = fake_grafo[i][j];}
+            }
+        }
+
+        grafo = new_graf;
+        fake_grafo = new_fake;
 
         vertices.remove(v);
 
@@ -120,14 +133,21 @@ public class Grafo{
     }
 
     public Object removeAresta(Aresta a){
-        Object elemento = a.getvalor();
+        Object elemento = a.getelement();
 
         int pri = a.getbeg().getkey();
         int sec = a.getend().getkey();
 
         grafo[pri][sec] = null;
-        grafo[sec][pri] = null;
-        
+        if (!isdircet(a)){
+            grafo[sec][pri] = null;
+        }
+        // Momentanio
+
+        fake_grafo[pri][sec]--;
+        if (!isdircet(a)){
+            fake_grafo[sec][pri]--;
+        }
         return elemento;
     }
     //---------------------\\
@@ -147,10 +167,11 @@ public class Grafo{
         }
 
         for (int i = 0; i < grafo.length; i++){
-            if (i == chave){ i++;}
             if (grafo[i][chave] != null){
                 arestas.add(grafo[i][chave]);
             }
+            if (i == chave){ i++;}
+            
         }
 
         Iterator<Aresta> iter = arestas.iterator();
@@ -186,6 +207,9 @@ public class Grafo{
         Aresta new_aresta = new Aresta(pri, fim, o, true);
 
         grafo[pri.getkey()][fim.getkey()] = new_aresta;
+
+        //Momentanio
+        fake_grafo[pri.getkey()][fim.getkey()] += 1;
 
         return new_aresta;
     }
