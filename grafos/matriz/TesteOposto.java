@@ -13,7 +13,7 @@ public class TesteOposto {
         System.out.println("Digite o elemento iniciador");
         Object ob = so.nextLine();
 
-        Grafo grafo = new Grafo(0, ob);
+        Grafo grafo = new Grafo(ob);
 
         System.out.println("------------------------");
         System.out.println("Digite um número inteiro");
@@ -162,21 +162,28 @@ public class TesteOposto {
 
         while (incidents.hasNext()) {
             // incidents.next();
-            System.out.print(incidents.next().getelement());
+            System.out.print(incidents.next().getelement() + " ");
         }
+        System.out.print("\n");
 
-        // Vertice oposto = grafo.oposto(vet, aret);
-        //System.out.println("É adjacente?: " + grafo.adjacent(v1, v2));
-        //System.out.println("Elemento anterior de v1:" + v1.getelement());
+        Vertice oposto = grafo.oposto(v1, aret);
+        // OPOSTO
+        System.out.println("Elemento oposto" + oposto.getelement());
+        // ADJACENT
+        System.out.println("É adjacente?: " + grafo.adjacent(v1, v2));
+        System.out.println("Elemento anterior de v1:" + v1.getelement());
         System.out.println("Elemento anterior de a1:" + aret.getelement());
+        // DIRECIONADA
         System.out.println("É direcionada?: " + grafo.isdircet(aret));
-        System.out.println("Digite um elemento");
+        System.out.println("Digite um elemento para vertice");
         ob = so.nextLine();
-        //grafo.substituirv(v1, ob);
+        grafo.substituirv(v1, ob);
+        System.out.println("Digite um elemento para aresta");
+        ob = so.nextLine();
         grafo.substituira(aret, ob);
-        // System.out.println("Elemento posterior de v1:" + v1.getelement());
+        // SUBSTITUTOS
+        System.out.println("Elemento posterior de v1:" + v1.getelement());
         System.out.println("Elemento posterior de a1:" + aret.getelement());
-       // System.out.println(oposto.getelement());
         
 
         sc.close();

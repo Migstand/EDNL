@@ -14,9 +14,10 @@ public class Teste{
         // Random ran = new Random();
 
         //int ke = sc.nextInt();
+        System.out.println("Digite o elemento iniciador");
         Object ob = so.nextLine();
 
-        Grafo grafo = new Grafo(0, ob);
+        Grafo grafo = new Grafo(ob);
 
         
         System.out.println("------------------------");
@@ -40,6 +41,9 @@ public class Teste{
         n = sc.nextInt();
         for (int i = 0; i < n; i++){
             Iterator<Vertice> vertis = grafo.vertices();
+            
+            System.out.println("Direcionada = 0 ou Não direcionada = 1 ?");
+            int diret = sc.nextInt();
 
             System.out.println("Escolha o primeiro vertice");
             vertices = sc.nextInt();
@@ -57,7 +61,13 @@ public class Teste{
             }
             v2 = vet;
             
-            grafo.inserirAresta(v1, v2, "Elemento" + i);
+            System.out.println("Digite o elemento da aresta");
+            ob = so.nextLine();
+            if (diret ==  0){
+                grafo.inserirAresta(v1, v2, ob);
+            } else{
+                grafo.inserirArestaDirecionada(v1, v2, ob);
+            }
             
         }
 

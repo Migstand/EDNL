@@ -13,7 +13,7 @@ public class TesteRemove {
         System.out.println("Digite o elemento iniciador");
         Object ob = so.nextLine();
 
-        Grafo grafo = new Grafo(0, ob);
+        Grafo grafo = new Grafo(ob);
 
         System.out.println("------------------------");
         System.out.println("Digite um número inteiro");

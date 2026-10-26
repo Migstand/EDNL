@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Grafo{
-    private Aresta[][] grafo;
+    private ArrayList<Aresta>[][] grafo;
     private ArrayList<Vertice> vertices;
     private int[][] fake_grafo;
 
-    public Grafo(int key, Object o){
+    @SuppressWarnings("unchecked") 
+    public Grafo(Object o){
         vertices = new ArrayList<>();
-        Vertice vet = new Vertice(key, o);
+        Vertice vet = new Vertice(0, o);
         vertices.add(vet);
-        grafo = new Aresta[1][1];
+        grafo = (ArrayList<Aresta>[][]) new ArrayList<?>[1][1];
+        grafo[0][0] = new ArrayList<>();
         fake_grafo = new int[1][1];
         
     }
@@ -55,14 +57,20 @@ public class Grafo{
     // --------------- \\
 
     //* INSERÇÕES *\
+    @SuppressWarnings("unchecked") 
     public void inserirVertice(Object o){
         int size = grafo.length;
-        Aresta[][] new_graf = new Aresta[size+1][size+1];
+        ArrayList<Aresta>[][] new_graf = (ArrayList<Aresta>[][]) new ArrayList<?>[size+1][size+1];
         int [][] new_fake = new int[size+1][size+1];
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
+        for (int i = 0; i < size+1; i++){
+            for (int j = 0; j < size+1; j++){
+                if (i == size){
+                    if (j == size){new_graf[i][j] = new ArrayList<>(); break;}    
+                    new_graf[i][j] = new ArrayList<>(); continue;
+                }
+                if (j == size){new_graf[i][j] = new ArrayList<>(); break;}
+                
                 new_graf[i][j] = grafo[i][j];
-
                 // Momentaneo \\
                 new_fake[i][j] = fake_grafo[i][j];
             }
@@ -70,8 +78,7 @@ public class Grafo{
 
         grafo = new_graf;
         fake_grafo = new_fake;
-        new_graf = null;
-
+        //new_graf = null;
         Vertice v = new Vertice(size, o);
 
         vertices.add(v);
@@ -80,10 +87,10 @@ public class Grafo{
     public Aresta inserirAresta(Vertice v, Vertice w, Object o){
         Aresta new_aresta = new Aresta(v, w, o, false);
 
+        grafo[v.getkey()][w.getkey()].add(new_aresta);
         
-        grafo[v.getkey()][w.getkey()] = new_aresta;
         if (v.getkey() != w.getkey()){
-            grafo[w.getkey()][v.getkey()] = new_aresta;
+            grafo[w.getkey()][v.getkey()].add(new_aresta);
         }
 
         // Momentaneo \\
@@ -99,19 +106,25 @@ public class Grafo{
     //--------------------\\
 
     //* REMOVES *\\
+    @SuppressWarnings("unchecked") 
     public Object removeVertice(Vertice v){
         Object elemento = v.getelement();
 
         int size = grafo.length;
         int chave = v.getkey();
 
-        Aresta[][] new_graf = new Aresta[size-1][size-1]; 
+        ArrayList<Aresta>[][] new_graf = (ArrayList<Aresta>[][]) new ArrayList<?>[size-1][size-1]; 
         for (int i = 0; i < size; i++){
             if (i == chave){continue;}
             for (int j = 0; j < size-1; j++){
                 if (j == chave) {j++;}
                 else{new_graf[i][j] = grafo[i][j];}
             }
+        }
+
+        
+        for (int i = chave; i < size-1; i++){
+            vertices.set(i, vertices.get(i+1));
         }
 
         // Momentaneo \\
@@ -138,9 +151,9 @@ public class Grafo{
         int pri = a.getbeg().getkey();
         int sec = a.getend().getkey();
 
-        grafo[pri][sec] = null;
+        grafo[pri][sec].remove(a);
         if (!isdircet(a)){
-            grafo[sec][pri] = null;
+            grafo[sec][pri].remove(a);
         }
         // Momentanio
 
@@ -162,13 +175,20 @@ public class Grafo{
 
         for (int i = 0; i < grafo.length; i++){
             if (grafo[chave][i] != null){
-                arestas.add(grafo[chave][i]);
-            } 
+                int size_a = grafo[chave][i].size();
+                for (int j = 0; j < size_a; j++){
+                    arestas.add(grafo[chave][i].get(j));
+                }
+            }
         }
 
         for (int i = 0; i < grafo.length; i++){
             if (grafo[i][chave] != null){
-                arestas.add(grafo[i][chave]);
+                int size_a = grafo[i][chave].size();
+                for (int j = 0; j < size_a; j++){
+                    arestas.add(grafo[i][chave].get(j));
+                }
+                
             }
             if (i == chave){ i++;}
             
@@ -188,8 +208,11 @@ public class Grafo{
 
         for (int i = 0; i < grafo.length; i++){
             for (int j = 0; j < grafo.length; j++){
+                int size_a = grafo[i][j].size();
                 if (grafo[i][j] != null){
-                    arestas.add(grafo[i][j]);
+                    for (int k = 0; k < size_a; k++){
+                        arestas.add(grafo[i][j].get(k));
+                    }
                 }
             }
         }
@@ -206,7 +229,7 @@ public class Grafo{
     public Aresta inserirArestaDirecionada(Vertice pri, Vertice fim, Object o){
         Aresta new_aresta = new Aresta(pri, fim, o, true);
 
-        grafo[pri.getkey()][fim.getkey()] = new_aresta;
+        grafo[pri.getkey()][fim.getkey()].add(new_aresta);
 
         //Momentanio
         fake_grafo[pri.getkey()][fim.getkey()] += 1;
