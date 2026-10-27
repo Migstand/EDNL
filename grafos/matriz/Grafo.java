@@ -114,25 +114,32 @@ public class Grafo{
         int chave = v.getkey();
 
         ArrayList<Aresta>[][] new_graf = (ArrayList<Aresta>[][]) new ArrayList<?>[size-1][size-1]; 
-        for (int i = 0; i < size; i++){
-            if (i == chave){continue;}
-            for (int j = 0; j < size-1; j++){
-                if (j == chave) {j++;}
-                else{new_graf[i][j] = grafo[i][j];}
+        int f_i = 0;
+        for (int i = 0; i < size-1; i++, f_i++){
+            int f_j = 0;
+            if (i == chave){++f_i;}
+            //int f_j =0;
+            for (int j = 0; j < size-1; j++, f_j++){
+                new_graf[i][j] = new ArrayList<>(); 
+                if (j == chave) {++f_j;}
+                new_graf[i][j] = grafo[f_i][f_j];
             }
         }
 
         
         for (int i = chave; i < size-1; i++){
+            vertices.get(i+1).setkey(i);
             vertices.set(i, vertices.get(i+1));
         }
+        
+        vertices.remove(size-1);
 
         // Momentaneo \\
         int[][] new_fake = new int[size-1][size-1]; 
-        for (int i = 0; i < size; i++){
+        for (int i = 0; i < size-1; i++){
             if (i == chave){continue;}
-            for (int j = 0; j < size; j++){
-                if (j == chave) {j++;}
+            for (int j = 0; j < size-1; j++){
+                if (j == chave) {continue;}
                 else{new_fake[i][j] = fake_grafo[i][j];}
             }
         }
@@ -242,6 +249,19 @@ public class Grafo{
             for (int j = 0; j < grafo.length; j++){
                 if (grafo[i][j] != null){
                     System.out.print(" |"+ fake_grafo[i][j]);
+                } else{
+                    System.out.print(" |0" );
+                }
+            }
+            System.err.println("");
+        }
+    }
+
+    public void draw_des(){
+        for (int i = 0; i < grafo.length; i++){
+            for (int j = 0; j < grafo.length; j++){
+                if (!grafo[i][j].isEmpty()){
+                    System.out.print(" |"+ (grafo[i][j].get(0)).getelement());
                 } else{
                     System.out.print(" |0" );
                 }

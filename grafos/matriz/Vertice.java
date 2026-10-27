@@ -20,4 +20,7 @@ public class Vertice{
     public int getkey(){
         return key;
     }
+    public void setkey(int key){
+        this.key = key;
+    }
 }

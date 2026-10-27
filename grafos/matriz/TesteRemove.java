@@ -76,6 +76,8 @@ public class TesteRemove {
         System.out.println("------------------------");
 
         grafo.draw();
+        System.out.println("------------------");
+        grafo.draw_des();
 
         Iterator<Aresta> arest = grafo.arestas();
 
@@ -103,16 +105,21 @@ public class TesteRemove {
         
         }
 
-        System.out.println("O aresta retirada foi: " + grafo.removeAresta(aret));
+        if (qtd_aresta!=0){
+            System.out.println("O aresta retirada foi: " + grafo.removeAresta(aret));
+        }
 
         grafo.draw();
+        System.out.println("------------------");
+        grafo.draw_des();
 
         Iterator<Vertice> verts = grafo.vertices();
 
         int qtd_vertices = 0;
 
         while (verts.hasNext()) {
-            verts.next();
+            Vertice v = verts.next();
+            System.out.println(v.getelement() + " " + "vertice: " +(v.getkey()+1));
             qtd_vertices++;
         }
 
@@ -144,10 +151,22 @@ public class TesteRemove {
         System.out.println("O vertice retirado foi: " + grafo.removeVertice(v1));
 
         grafo.draw();
+        System.out.println("------------------");
+        grafo.draw_des();
 
         System.out.println("");
 
+        qtd_vertices = 0;
+        verts = grafo.vertices();
+        while (verts.hasNext()) {
+            Vertice v = verts.next();
+            System.out.println(v.getelement() + " " + "vertice: " + (v.getkey()+1));
+            qtd_vertices++;
+
+        }
+        System.out.println("Quantidade de vertices:" + qtd_vertices);
         System.out.println("Escolha outro vertice");
+        
         n = sc.nextInt();
 
         verts = grafo.vertices();
@@ -160,6 +179,8 @@ public class TesteRemove {
 
         System.out.println("O vertice retirado foi: " + grafo.removeVertice(v2));
         grafo.draw();
+        System.out.println("------------------");
+        grafo.draw_des();
 
         // Vertice oposto = grafo.oposto(vet, aret);
         //System.out.println("É adjacente?: " + grafo.adjacent(v1, v2));
