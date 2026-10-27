@@ -25,8 +25,15 @@ public class Vertice{
     public int getkey(){
         return key;
     }
+    public void setkey(int key){
+        this.key = key;
+    }
 
     public ArrayList<Aresta> getarestas(){
         return arestas;
+    }
+
+    public void setaresta(Aresta a){
+        arestas.add(a);
     }
 }
