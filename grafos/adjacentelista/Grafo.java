@@ -6,14 +6,12 @@ import java.util.Iterator;
 public class Grafo{
     private ArrayList<Vertice> grafo;
     private ArrayList<Aresta> arestas;
-    //private int[][] fake_grafo;
 
     public Grafo(Object o){
         grafo = new ArrayList<>();
         arestas =  new ArrayList<>();
         Vertice vet = new Vertice(0, o);
         grafo.add(vet);
-        //fake_grafo = new int[1][1];
     }
 
     //* OBTER *\\
@@ -78,14 +76,6 @@ public class Grafo{
             grafo.get(w.getkey()).setaresta(new_aresta);
         }
 
-        // Momentaneo \\
-
-        // fake_grafo[v.getkey()][w.getkey()] += 1;
-        // if (v.getkey() != w.getkey()){
-        //     fake_grafo[w.getkey()][v.getkey()] += 1;    
-        // }
-        
-
         return new_aresta;
     }
     //--------------------\\
@@ -108,16 +98,6 @@ public class Grafo{
         }
         grafo.remove(size-1);
 
-        // Momentaneo \\
-        // int[][] new_fake = new int[size-1][size-1]; 
-        // for (int i = 0; i < size-1; i++){
-        //     if (i == chave){continue;}
-        //     for (int j = 0; j < size-1; j++){
-        //         if (j == chave) {continue;}
-        //         else{new_fake[i][j] = fake_grafo[i][j];}
-        //     }
-        // }
-
         return elemento;
     }
 
@@ -131,20 +111,23 @@ public class Grafo{
         grafo.get(pri).getarestas().remove(a);
         grafo.get(sec).getarestas().remove(a);
         
-        // Momentanio
-        // fake_grafo[pri][sec]--;
-        // if (!isdircet(a)){
-        //     fake_grafo[sec][pri]--;
-        // }
         return elemento;
     }
     //---------------------\\
-
-    
     //* ITERATORS *\\
 
      public Iterator<Aresta> arestasIncidentes(Vertice v){
-        ArrayList<Aresta> arests = v.getarestas();
+        ArrayList<Aresta> arests = new ArrayList<>();
+
+        for (int i = 0; i < grafo.size(); i++){
+            if (i == v.getkey()){i++;}
+            Vertice vet = grafo.get(i);
+            for (int j = 0; j < vet.getarestas().size(); j++){
+                Vertice ops = oposto(vet, vet.getarestas().get(j));
+                if (ops == v){ arests.add(vet.getarestas().get(j));}
+            }
+        }
+        arests.addAll(v.getarestas());
 
         Iterator<Aresta> iter = arests.iterator();
         return iter;
@@ -171,24 +154,9 @@ public class Grafo{
         arestas.add(new_aresta);
         grafo.get(pri.getkey()).setaresta(new_aresta);
 
-        //Momentanio
-        //fake_grafo[pri.getkey()][fim.getkey()] += 1;
 
         return new_aresta;
     }
-
-    // public void draw(){
-    //     for (int i = 0; i < grafo.length; i++){
-    //         for (int j = 0; j < grafo.length; j++){
-    //             if (grafo[i][j] != null){
-    //                 System.out.print(" |"+ fake_grafo[i][j]);
-    //             } else{
-    //                 System.out.print(" |0" );
-    //             }
-    //         }
-    //         System.err.println("");
-    //     }
-    // }
 
     public void draw_des(){
         for (int i = 0; i < grafo.size(); i++){

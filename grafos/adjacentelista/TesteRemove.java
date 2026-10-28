@@ -185,20 +185,6 @@ public class TesteRemove {
         System.out.println("------------------");
         grafo.draw_des();
 
-        // Vertice oposto = grafo.oposto(vet, aret);
-        //System.out.println("É adjacente?: " + grafo.adjacent(v1, v2));
-        //System.out.println("Elemento anterior de v1:" + v1.getelement());
-        //System.out.println("Elemento anterior de a1:" + aret.getelement());
-        //System.out.println("É direcionada?: " + grafo.isdircet(aret));
-        //System.out.println("Digite um elemento");
-        //ob = so.nextLine();
-        //grafo.substituirv(v1, ob);
-        //grafo.substituira(aret, ob);
-        // System.out.println("Elemento posterior de v1:" + v1.getelement());
-        //System.out.println("Elemento posterior de a1:" + aret.getelement());
-       // System.out.println(oposto.getelement());
-        
-
         sc.close();
         so.close();
 

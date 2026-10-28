@@ -167,23 +167,23 @@ public class TesteOposto {
             }
         }
 
-        Vertice oposto = grafo.oposto(v2, aret);
+        Vertice oposto = grafo.oposto(v2, aret); System.out.println("");
         // OPOSTO
-        System.out.println("Elemento oposto" + oposto.getelement());
+        System.out.println("Elemento oposto" + oposto.getelement()); System.out.println("");
         // ADJACENT
-        System.out.println("É adjacente?: " + grafo.adjacent(v1, v2));
-        System.out.println("Elemento anterior de v1:" + v1.getelement());
-        System.out.println("Elemento anterior de a1:" + aret.getelement());
+        System.out.println("É adjacente?: " + grafo.adjacent(v1, v2)); System.out.println("");
+        System.out.println("Elemento anterior de v1:" + v1.getelement()); System.out.println("");
+        System.out.println("Elemento anterior de a1:" + aret.getelement()); System.out.println("");
         // DIRECIONADA
-        System.out.println("É direcionada?: " + grafo.isdircet(aret));
-        System.out.println("Digite um elemento para vertice");
+        System.out.println("É direcionada?: " + grafo.isdircet(aret)); System.out.println("");
+        System.out.println("Digite um elemento para vertice"); System.out.println("");
         ob = so.nextLine();
         grafo.substituirv(v1, ob);
-        System.out.println("Digite um elemento para aresta");
+        System.out.println("Digite um elemento para aresta"); System.out.println("");
         ob = so.nextLine();
         grafo.substituira(aret, ob);
         // SUBSTITUTOS
-        System.out.println("Elemento posterior de v1:" + v1.getelement());
+        System.out.println("Elemento posterior de v1:" + v1.getelement()); System.out.println("");
         System.out.println("Elemento posterior de a1:" + aret.getelement());
         
 
