@@ -40,10 +40,10 @@ public class Grafo{
     }
 
     public boolean adjacent(Vertice v, Vertice w){
-        int pri = 
-        int sec =
+        int pri = v.getkey();
+        int sec = w.getkey();
         for (int i = 0; i < grafo.size(); i++){
-            if (grafo.get(v.getkey()))
+            if (grafo.get(pri).getarestas().get(i))
         }
         return false;
     }
