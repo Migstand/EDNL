@@ -1,4 +1,4 @@
-package grafos.matriz;
+package grafos.adjacentelista;
 
 import java.util.Scanner;
 import java.util.Iterator;
@@ -43,7 +43,7 @@ public class TesteOposto {
         n = sc.nextInt();
         for (int i = 0; i < n; i++){
             
-            System.out.println("Direcionada = 0 ou Não direcionada = 1 ?");
+            System.out.println("Não Direcionada = 0 ou Direcionada = 1 ?");
             int diret = sc.nextInt();
 
             Iterator<Vertice> vertis = grafo.vertices();
@@ -71,47 +71,20 @@ public class TesteOposto {
             } else{
                 grafo.inserirArestaDirecionada(v1, v2, ob);
             }
-            
-            
-            
         }
 
         System.out.println("------------------------");
 
-        grafo.draw();
-
-        Iterator<Aresta> arest = grafo.arestas();
-
-        int qtd_aresta = 0;
-
-        while (arest.hasNext()) {
-            arest.next();
-            qtd_aresta++;
-        }
-
-        arest = grafo.arestas();
-        Aresta aret = null;
-
-        // INSERÇÕES DE ARESTAS
-
-        System.out.println("Quantidade de arestas:" + qtd_aresta);
-        System.out.println("Escolha uma aresta");
-        n = sc.nextInt();
-
-        // Aresta ar1;
-        for (int i = 0; i < n; i++){
-            if (arest.hasNext()){
-                aret = arest.next();
-            }
-        
-        }
+        grafo.draw_des();
 
         Iterator<Vertice> verts = grafo.vertices();
 
         int qtd_vertices = 0;
 
+        System.out.println("-------------------------");
+        System.out.println("Vértices: ");
         while (verts.hasNext()) {
-            verts.next();
+            System.out.println("Nº vertices: " + (qtd_vertices+1)+ " "+ verts.next().getelement());
             qtd_vertices++;
         }
 
@@ -119,7 +92,6 @@ public class TesteOposto {
         vet = null;
         v1 = null;
         v2 = null;
-        
 
         System.out.println("Quantidade de vertices:" + qtd_vertices);
         System.out.println("Escolha um vertice");
@@ -169,7 +141,33 @@ public class TesteOposto {
         }
         System.out.print("\n");
 
-        Vertice oposto = grafo.oposto(v1, aret);
+        Iterator<Aresta> arest = grafo.arestas();
+
+        int qtd_aresta = 0;
+
+        System.out.println("Arestas: ");
+        while (arest.hasNext()) {
+            System.out.println("Nº aresta: " + (qtd_aresta+1)+ " "+ arest.next().getelement());
+            qtd_aresta++;
+        }
+
+        arest = grafo.arestas();
+        Aresta aret = null;
+
+        // INSERÇÕES DE ARESTAS
+
+        System.out.println("Quantidade de arestas:" + qtd_aresta);
+        System.out.println("Escolha uma aresta");
+        n = sc.nextInt();
+
+        // Aresta ar1;
+        for (int i = 0; i < n; i++){
+            if (arest.hasNext()){
+                aret = arest.next();
+            }
+        }
+
+        Vertice oposto = grafo.oposto(v2, aret);
         // OPOSTO
         System.out.println("Elemento oposto" + oposto.getelement());
         // ADJACENT

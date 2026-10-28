@@ -41,7 +41,7 @@ public class Main{
         for (int i = 0; i < n; i++){
             Iterator<Vertice> vertis = grafo.vertices();
             
-            System.out.println("Direcionada = 0 ou Não direcionada = 1 ?");
+            System.out.println("Não Direcionada = 0 ou direcionada = 1 ?");
             int diret = sc.nextInt();
 
             System.out.println("Escolha o primeiro vertice");
@@ -72,14 +72,15 @@ public class Main{
 
         System.out.println("------------------------");
 
-        grafo.draw();
+//        grafo.draw();
+        grafo.draw_des();
 
         Iterator<Aresta> arest = grafo.arestas();
 
         int qtd_aresta = 0;
 
         while (arest.hasNext()) {
-            arest.next();
+            System.out.println("Nº aresta: " + (qtd_aresta+1)+ " "+ arest.next().getelement());
             qtd_aresta++;
         }
 

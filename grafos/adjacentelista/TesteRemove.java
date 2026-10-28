@@ -1,4 +1,4 @@
-package grafos.matriz;
+package grafos.adjacentelista;
 
 import java.util.Scanner;
 import  java.util.Iterator;;
@@ -43,7 +43,7 @@ public class TesteRemove {
         n = sc.nextInt();
         for (int i = 0; i < n; i++){
             
-            System.out.println("Direcionada = 0 ou Não direcionada = 1 ?");
+            System.out.println("Não Direcionada = 0 ou direcionada = 1 ?");
             int diret = sc.nextInt();
 
             Iterator<Vertice> vertis = grafo.vertices();
@@ -78,7 +78,7 @@ public class TesteRemove {
 
         System.out.println("------------------------");
 
-        grafo.draw();
+        //grafo.draw();
         System.out.println("------------------");
         grafo.draw_des();
 
@@ -87,7 +87,7 @@ public class TesteRemove {
         int qtd_aresta = 0;
 
         while (arest.hasNext()) {
-            arest.next();
+            System.out.println("Nº aresta: " + (qtd_aresta+1)+ " "+ arest.next().getelement());
             qtd_aresta++;
         }
 
@@ -112,7 +112,7 @@ public class TesteRemove {
             System.out.println("O aresta retirada foi: " + grafo.removeAresta(aret));
         }
 
-        grafo.draw();
+        //grafo.draw();
         System.out.println("------------------");
         grafo.draw_des();
 
@@ -153,7 +153,7 @@ public class TesteRemove {
 
         System.out.println("O vertice retirado foi: " + grafo.removeVertice(v1));
 
-        grafo.draw();
+        //grafo.draw();
         System.out.println("------------------");
         grafo.draw_des();
 
@@ -181,7 +181,7 @@ public class TesteRemove {
         }
 
         System.out.println("O vertice retirado foi: " + grafo.removeVertice(v2));
-        grafo.draw();
+        //grafo.draw();
         System.out.println("------------------");
         grafo.draw_des();
 
