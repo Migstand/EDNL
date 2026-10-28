@@ -1,6 +1,5 @@
 package grafos.adjacentelista;
 
-import grafos.Aresta;
 import java.util.ArrayList;
 
 public class Vertice{

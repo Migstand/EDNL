@@ -1,5 +1,6 @@
-package grafos;
+package grafos.adjacentelista;
 
+import java.util.Iterator;
 import java.util.Scanner;
 // import java.util.Random;
 

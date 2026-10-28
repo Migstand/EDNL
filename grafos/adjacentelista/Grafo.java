@@ -5,10 +5,12 @@ import java.util.Iterator;
 
 public class Grafo{
     private ArrayList<Vertice> grafo;
+    private ArrayList<Aresta> arestas;
     private int[][] fake_grafo;
 
     public Grafo(Object o){
         grafo = new ArrayList<>();
+        arestas =  new ArrayList<>();
         Vertice vet = new Vertice(0, o);
         grafo.add(vet);
         fake_grafo = new int[1][1];
@@ -38,7 +40,12 @@ public class Grafo{
     }
 
     public boolean adjacent(Vertice v, Vertice w){
-        return (grafo[v.getkey()][w.getkey()] != null) || (grafo[w.getkey()][v.getkey()] != null);
+        int pri = 
+        int sec =
+        for (int i = 0; i < grafo.size(); i++){
+            if (grafo.get(v.getkey()))
+        }
+        return false;
     }
     // ----------- \\
 
@@ -61,6 +68,7 @@ public class Grafo{
 
     public Aresta inserirAresta(Vertice v, Vertice w, Object o){
         Aresta new_aresta = new Aresta(v, w, o, false);
+        arestas.add(new_aresta);
 
         grafo.get(v.getkey()).setaresta(new_aresta);
         
@@ -118,10 +126,10 @@ public class Grafo{
         int pri = a.getbeg().getkey();
         int sec = a.getend().getkey();
 
+        arestas.remove(a);
         grafo.get(pri).getarestas().remove(a);
-        if (!isdircet(a)){
-            grafo.get(sec).getarestas().remove(a);
-        }
+        grafo.get(sec).getarestas().remove(a);
+        
         // Momentanio
 
         fake_grafo[pri][sec]--;
@@ -136,32 +144,9 @@ public class Grafo{
     //* ITERATORS *\\
 
      public Iterator<Aresta> arestasIncidentes(Vertice v){
-        ArrayList<Aresta> arestas = new ArrayList<>();
-        
-        int chave = v.getkey();
+        ArrayList<Aresta> arests = v.getarestas();
 
-        for (int i = 0; i < grafo.length; i++){
-            if (grafo[chave][i] != null){
-                int size_a = grafo[chave][i].size();
-                for (int j = 0; j < size_a; j++){
-                    arestas.add(grafo[chave][i].get(j));
-                }
-            }
-        }
-
-        for (int i = 0; i < grafo.length; i++){
-            if (grafo[i][chave] != null){
-                int size_a = grafo[i][chave].size();
-                for (int j = 0; j < size_a; j++){
-                    arestas.add(grafo[i][chave].get(j));
-                }
-                
-            }
-            if (i == chave){ i++;}
-            
-        }
-
-        Iterator<Aresta> iter = arestas.iterator();
+        Iterator<Aresta> iter = arests.iterator();
         return iter;
     }
 
@@ -171,18 +156,6 @@ public class Grafo{
     }
 
     public Iterator<Aresta> arestas(){
-        ArrayList<Aresta> arestas = new ArrayList<>();
-
-        for (int i = 0; i < grafo.length; i++){
-            for (int j = 0; j < grafo.length; j++){
-                int size_a = grafo[i][j].size();
-                if (grafo[i][j] != null){
-                    for (int k = 0; k < size_a; k++){
-                        arestas.add(grafo[i][j].get(k));
-                    }
-                }
-            }
-        }
         Iterator<Aresta> iter = arestas.iterator();
         return iter;
     }
@@ -196,7 +169,7 @@ public class Grafo{
     public Aresta inserirArestaDirecionada(Vertice pri, Vertice fim, Object o){
         Aresta new_aresta = new Aresta(pri, fim, o, true);
 
-        grafo[pri.getkey()][fim.getkey()].add(new_aresta);
+        grafo.get(v.getkey()).setaresta(new_aresta);
 
         //Momentanio
         fake_grafo[pri.getkey()][fim.getkey()] += 1;
@@ -218,15 +191,16 @@ public class Grafo{
     }
 
     public void draw_des(){
-        for (int i = 0; i < grafo.length; i++){
-            for (int j = 0; j < grafo.length; j++){
-                if (!grafo[i][j].isEmpty()){
-                    System.out.print(" |"+ (grafo[i][j].get(0)).getelement());
-                } else{
-                    System.out.print(" |0" );
-                }
+        for (int i = 0; i < grafo.size(); i++){
+            System.out.print(grafo.get(i).getelement() + ": ");
+            ArrayList<Aresta> arests = grafo.get(i).getarestas;
+            if (arests.isEmpty()){
+                System.out.print(" |null");
             }
-            System.err.println("");
+            for (int j = 0; j < arests.size(); j++){
+                System.out.print(" |"+ (arests.get(j)).getelement());
+            }
+            System.out.println("");
         }
     }
 
