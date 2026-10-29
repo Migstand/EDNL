@@ -119,7 +119,7 @@ public class Grafo{
      public Iterator<Aresta> arestasIncidentes(Vertice v){
         ArrayList<Aresta> arests = new ArrayList<>();
 
-        for (int i = 0; i < grafo.size(); i++){
+        for (int i = 0; i < grafo.size()-1; i++){
             if (i == v.getkey()){i++;}
             Vertice vet = grafo.get(i);
             for (int j = 0; j < vet.getarestas().size(); j++){
