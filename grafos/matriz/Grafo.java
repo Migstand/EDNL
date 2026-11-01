@@ -42,7 +42,7 @@ public class Grafo{
     }
 
     public boolean adjacent(Vertice v, Vertice w){
-        return (grafo[v.getkey()][w.getkey()] != null) || (grafo[w.getkey()][v.getkey()] != null);
+        return (!grafo[v.getkey()][w.getkey()].isEmpty()) || (!grafo[w.getkey()][v.getkey()].isEmpty());
     }
     // ----------- \\
 

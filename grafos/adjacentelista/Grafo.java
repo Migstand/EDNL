@@ -39,11 +39,13 @@ public class Grafo{
     public boolean adjacent(Vertice v, Vertice w){
         int pri = v.getkey();
         int sec = w.getkey();
-        for (int i = 0; i < grafo.size(); i++){
-            try {
-                if ((oposto(v, grafo.get(pri).getarestas().get(i))) == w){
-                    return true;}
-            } catch (ArithmeticException e){ e.getMessage();}
+        if (!grafo.get(pri).getarestas().isEmpty()){
+            for (int i = 0; i < grafo.size(); i++){
+                try {
+                    if ((oposto(v, grafo.get(pri).getarestas().get(i))) == w){
+                        return true;}
+                } catch (ArithmeticException e){ e.getMessage();}
+            }
         }
         return false;
     }
