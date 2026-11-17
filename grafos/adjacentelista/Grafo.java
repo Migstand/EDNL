@@ -14,6 +14,10 @@ public class Grafo{
         grafo.add(vet);
     }
 
+    public int size(){
+        return grafo.size();
+    }
+
     //* OBTER *\\
     public Vertice[] finalVertice(Aresta a){
         Vertice[] finalfall = new Vertice[2];
