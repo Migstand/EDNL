@@ -3,38 +3,47 @@ import grafos.adjacentelista.Vertice;
 import grafos.adjacentelista.Aresta;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class Dijkstra {
     private double mijinion;
-    //private ArrayList<Vertice> restantes;
-    private ArrayList<Integer> valores;
+    //private Antecessor caminhos;
+    private PriorityQueue<Double> valores;
     private Grafo grafo;
 
     public Dijkstra(Grafo grafo){
         mijinion = Double.POSITIVE_INFINITY;
         //percorridos = grafo.vertices();
-        valores = new ArrayList<>(Collections.nCopies(grafo.size(), 0));
+        valores = new PriorityQueue<>();
         this.grafo = grafo;
     }
 
-    public ArrayList<Integer> dijkstra(Vertice v){
+    public ArrayList<Antecessor> dijkstra(Vertice v){
         ArrayList<Vertice> percorridos = new ArrayList<>();
         percorridos.add(v);
+        ArrayList<Antecessor> caminhos = new ArrayList<>();
 
         // PRIMEIRO PASSO: FUNÇÃO L DOS ELEMENTOS
         Iterator it = grafo.vertices();
         while (it.hasNext()) {
-            valores.set(i, L(v, it.next()));
+            Vertice vet = (Vertice)it.next();
+            double va = L(v, vet);
+            valores.add(va);
+            Antecessor ant = new Antecessor(va, vet);
+            caminhos.add(ant);
         }
-        //SEGUNDO PASSO: BUSCA GULOSA
-        // while (percorridos.size() != grafo.size()) {
-            
-        // }
 
-        return valores;
+        // Valores == Valores percorridos
+
+        //SEGUNDO PASSO: BUSCA GULOSA
+        while (percorridos.size() != grafo.size()) {
+            
+        }
+
+        return caminhos;
     }
 
-    private int L(Vertice v0, Vertice v){
+    private double L(Vertice v0, Vertice v){
         if (v0 == v){
             return 0;
         }
