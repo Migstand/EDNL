@@ -1,3 +1,5 @@
+package grafos.algoritmos;
+
 import grafos.adjacentelista.Grafo;
 import grafos.adjacentelista.Vertice;
 import grafos.adjacentelista.Aresta;
@@ -12,11 +14,12 @@ public class DijkstraMain{
         Scanner sc = new Scanner(System.in);
         Scanner so = new Scanner(System.in);
         
+        System.out.println("Digite o elemento do vertice: "+ 1);
         Object ob = so.nextLine();
         Grafo g = new Grafo(ob);
         
         for (int i = 0; i < 4; i++){
-            System.out.println("Digite o elemento do vertice:");
+            System.out.println("Digite o elemento do vertice: "+ (i+2));
             ob = so.nextLine();
             g.inserirVertice(ob);
         }
@@ -50,9 +53,9 @@ public class DijkstraMain{
         v = (Vertice)its.next();
 
         HashMap<Integer, Antecessor> dijkstra = d.dijkstra(v);
-        ArrayList<Integer, Antecessor>dijkstra
-        for (int i = 0; i < grafo.size(); i++){
-            System.out.println(dijkstra.get(i).getvalor());
+        for (int i = 0; i < g.size(); i++){
+            Antecessor ant = dijkstra.get(i);
+            System.out.println("De: " + v.getelement() + " até " + ant.getvet().getelement() + " = " +  ant.getvalor());
         }
 
     }

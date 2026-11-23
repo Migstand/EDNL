@@ -1,3 +1,5 @@
+package grafos.algoritmos;
+
 import grafos.adjacentelista.Grafo;
 import grafos.adjacentelista.Vertice;
 import grafos.adjacentelista.Aresta;
@@ -21,7 +23,7 @@ public class Dijkstra {
     }
 
     public HashMap<Integer, Antecessor> dijkstra(Vertice v){
-        ArrayList<Vertice> n_percorridos = new ArrayList<>();
+        ArrayList<Antecessor> n_percorridos = new ArrayList<>();
         ArrayList<Vertice> percorridos = new ArrayList<>();
         percorridos.add(v);
         HashMap<Integer, Antecessor> caminhos = new HashMap<>(); // Guarda os antecessores e mantém atualizado os seus valores;
@@ -32,9 +34,10 @@ public class Dijkstra {
             Vertice vet = (Vertice)it.next();
             double va = L(v, vet);
             Antecessor ant = new Antecessor(va, vet);
+            //System.out.println(vet.getkey());
             caminhos.put(vet.getkey(), ant);
             if (vet != v){
-                n_percorridos.add(vet);
+                n_percorridos.add(ant);
             }
         }
 
@@ -49,13 +52,15 @@ public class Dijkstra {
             double percorreu = caminhos.get(min_guloso.getkey()).getvalor(); //d[w] valor atual do elemento percorrido
 
             for (int i = 0; i < n_percorridos.size(); i++){ // CONCEITUAL
-                int ind = n_percorridos.get(i).getkey(); // (CONCEITUAL)
-                double valor = caminhos.(ind).getvalor();//get(ind.getelement()); // Valor atual do caminho que está sendo verificado;
+                Vertice n_percorre = n_percorridos.get(i).getvet();
+                int ind = n_percorre.getkey(); // (CONCEITUAL)
+                double valor = caminhos.get(ind).getvalor(); //get(ind.getelement()); // Valor atual do caminho que está sendo verificado;
+                double l = L(min_guloso, n_percorre);
                 
-                caminhos.put(ind, Math.min(valor, percorreu + L(min_guloso, ind))); // Comparar o valor atual do não percorrido com a soma do ponto de partida até o esse novo.
+                caminhos.get(ind).setvalor(Math.min(valor, percorreu + l)); // Comparar o valor atual do não percorrido com a soma do ponto de partida até o esse novo.
                 
-                if(percorreu + L(min_guloso, ind)<valor){
-                    caminhos.get(ind).setant(min_guloso);
+                if(percorreu + l <valor){
+                    caminhos.get(ind).setant(caminhos.get(min_guloso.getkey()));
                 }
             }
         }
@@ -68,8 +73,10 @@ public class Dijkstra {
             return 0;
         }
 
+        //System.out.println(" ");
+        //System.out.println(v0.getkey() + " " + v.getkey());
         if (grafo.adjacent(v0, v)){
-            return (Double)aresta(v0, v).getelement();
+            return ((Integer) aresta(v0, v).getelement()).doubleValue();
         }
 
         return mijinion;
@@ -87,11 +94,14 @@ public class Dijkstra {
         return aresta;
     }
 
-    private Vertice menor(ArrayList<Vertice> arr){
+    private Vertice menor(ArrayList<Antecessor> arr){
         double menor = mijinion;
-
+        Vertice min = null;
         for (int i = 0; i < arr.size(); i++){
-            menor = Math.min(menor, arr.get(i));
+            if (menor > arr.get(i).getvalor()){
+                min = arr.get(i).getvet();
+            }
+            //menor = Math.min(menor, arr.get(i).getvalor());
         }
 
         return min;

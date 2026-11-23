@@ -1,3 +1,5 @@
+package grafos.algoritmos;
+
 import grafos.adjacentelista.Vertice;
 // Quando utilizar o antecessor, terei acesso para o caminho que ele percorreu;
 public class Antecessor {

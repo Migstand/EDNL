@@ -44,7 +44,7 @@ public class Grafo{
         int pri = v.getkey();
         int sec = w.getkey();
         if (!grafo.get(pri).getarestas().isEmpty()){
-            for (int i = 0; i < grafo.size(); i++){
+            for (int i = 0; i < grafo.get(pri).getarestas().size(); i++){
                 try {
                     if ((oposto(v, grafo.get(pri).getarestas().get(i))) == w){
                         return true;}
