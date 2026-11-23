@@ -69,7 +69,7 @@ public class Dijkstra {
         }
 
         if (grafo.adjacent(v0, v)){
-            return (Integer)aresta(v0, v).getelement();
+            return (Double)aresta(v0, v).getelement();
         }
 
         return mijinion;
