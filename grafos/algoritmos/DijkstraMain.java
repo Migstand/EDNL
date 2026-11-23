@@ -56,6 +56,15 @@ public class DijkstraMain{
         for (int i = 0; i < g.size(); i++){
             Antecessor ant = dijkstra.get(i);
             System.out.println("De: " + v.getelement() + " até " + ant.getvet().getelement() + " = " +  ant.getvalor());
+            System.out.print("Caminho: ");
+            Antecessor cami = ant;
+            while(cami.getants() != null){
+                System.out.print( cami.getvet().getelement()+ " <-- ");
+                cami = cami.getants();
+            }
+            System.out.println(cami.getvet().getelement());
+            System.out.println("-----------------------------");
+
         }
 
     }
