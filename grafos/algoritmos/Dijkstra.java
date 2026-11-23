@@ -4,6 +4,8 @@ import grafos.adjacentelista.Aresta;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.PriorityQueue;
+import java.util.HashMap;
+//import java.util.PriorityQueue;
 
 public class Dijkstra {
     private double mijinion; // Infinito
@@ -18,11 +20,11 @@ public class Dijkstra {
         this.grafo = grafo;
     }
 
-    public ArrayList<Antecessor> dijkstra(Vertice v){
+    public HashMap<Integer, Antecessor> dijkstra(Vertice v){
         ArrayList<Vertice> n_percorridos = new ArrayList<>();
         ArrayList<Vertice> percorridos = new ArrayList<>();
         percorridos.add(v);
-        ArrayList<Antecessor> caminhos = new ArrayList<>(); // Guarda os antecessores e mantém atualizado os seus valores;
+        HashMap<Integer, Antecessor> caminhos = new HashMap<>(); // Guarda os antecessores e mantém atualizado os seus valores;
 
         // PRIMEIRO PASSO: FUNÇÃO L DOS ELEMENTOS (FEITA, conceitualmente)
         Iterator it = grafo.vertices();
@@ -30,7 +32,7 @@ public class Dijkstra {
             Vertice vet = (Vertice)it.next();
             double va = L(v, vet);
             Antecessor ant = new Antecessor(va, vet);
-            caminhos.add(ant);
+            caminhos.put(vet.getkey(), ant);
             if (vet != v){
                 n_percorridos.add(vet);
             }
@@ -44,13 +46,13 @@ public class Dijkstra {
 
             percorridos.add(min_guloso);
             n_percorridos.remove(min_guloso);
-            double percorreu = min_guloso.getelement(); //d[w]
+            double percorreu = caminhos.get(min_guloso.getkey()).getvalor(); //d[w] valor atual do elemento percorrido
 
             for (int i = 0; i < n_percorridos.size(); i++){ // CONCEITUAL
-                Vertice ind = n_percorridos.get(i); // (CONCEITUAL)
-                double valor = caminhos.get(ind.getelement()); // Valor atual do caminho que está sendo verificado; 
+                int ind = n_percorridos.get(i).getkey(); // (CONCEITUAL)
+                double valor = caminhos.(ind).getvalor();//get(ind.getelement()); // Valor atual do caminho que está sendo verificado;
                 
-                caminhos.set(ind, Math.min(valor, percorreu + L(min_guloso, ind))); // Comparar o valor atual do não percorrido com a soma do ponto de partida até o esse novo.
+                caminhos.put(ind, Math.min(valor, percorreu + L(min_guloso, ind))); // Comparar o valor atual do não percorrido com a soma do ponto de partida até o esse novo.
                 
                 if(percorreu + L(min_guloso, ind)<valor){
                     caminhos.get(ind).setant(min_guloso);
