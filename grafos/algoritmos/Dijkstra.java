@@ -45,10 +45,11 @@ public class Dijkstra {
 
         //SEGUNDO PASSO: BUSCA GULOSA
         while (percorridos.size() != grafo.size()) {
-            Vertice min_guloso = menor(n_percorridos);
+            Antecessor ant_guloso = menor(n_percorridos);
+            Vertice min_guloso = ant_guloso.getvet();
 
             percorridos.add(min_guloso);
-            n_percorridos.remove(min_guloso);
+            n_percorridos.remove(ant_guloso);
             double percorreu = caminhos.get(min_guloso.getkey()).getvalor(); //d[w] valor atual do elemento percorrido
 
             for (int i = 0; i < n_percorridos.size(); i++){ // CONCEITUAL
@@ -94,12 +95,12 @@ public class Dijkstra {
         return aresta;
     }
 
-    private Vertice menor(ArrayList<Antecessor> arr){
+    private Antecessor menor(ArrayList<Antecessor> arr){
         double menor = mijinion;
-        Vertice min = null;
+        Antecessor min = null;
         for (int i = 0; i < arr.size(); i++){
             if (menor > arr.get(i).getvalor()){
-                min = arr.get(i).getvet();
+                min = arr.get(i);
             }
             //menor = Math.min(menor, arr.get(i).getvalor());
         }
