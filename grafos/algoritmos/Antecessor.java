@@ -1,31 +1,37 @@
-import java.util.ArrayList;
-import grafos.adjacentelista.Vertice;;
-
+import grafos.adjacentelista.Vertice;
+// Quando utilizar o antecessor, terei acesso para o caminho que ele percorreu;
 public class Antecessor {
-    private double valor;
-    private ArrayList<Vertice> ants;
-    //private Vertice alvo;
-    //private Vertice ref;
+    private double valor; // Valor mínimo adquirido
+    private Antecessor ants;
+    private Vertice vet; // Significa o vértice alvo da chega; Ex: A ---> D;
 
     public Antecessor(double valor, Vertice v){
         this.valor = valor;
-        ants = new ArrayList<>();
-        ants.add(v);
+        vet = v;
+        ants = null;
     }
 
-    public void addant(Vertice v){
-        ants.add(v);
+    public void setant(Antecessor ant){
+        ants = ant;
     }
 
     public void setvalor(double valor){
         this.valor = valor;
     }
 
+    public void setvet(Vertice v){
+        vet = v;
+    }
+
     public double getvalor(){
         return valor;
     }
 
-    public ArrayList<Vertice> getants(){
+    public Antecessor getants(){
         return ants;
+    }
+
+    public Vertice getvet(){
+        return vet;
     }
 }
